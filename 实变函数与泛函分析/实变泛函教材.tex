@@ -1,0 +1,1926 @@
+\documentclass[10pt,openany]{book}
+\usepackage{ctex} 
+\usepackage{enumerate}
+\usepackage{geometry,graphicx,xcolor,color}
+\geometry{
+  a4paper,
+  top=25.4mm, bottom=25.4mm,
+  left=20mm, right=20mm,
+  headheight=2.17cm,
+  headsep=4mm,
+  footskip=12mm
+}
+
+\usepackage{amssymb,amsmath,mathrsfs}                    % 数学字体
+\usepackage{mathpazo}% 采用 Palatino 风格字体
+\usepackage[nofontspec]{newpxtext}
+
+\definecolor{winered}{rgb}{0.5,0,0}
+\definecolor{structurecolor}{RGB}{122,122,142}
+\definecolor{main}{HTML}{3D445F}
+\definecolor{second}{HTML}{627581}
+\definecolor{third}{HTML}{9D8798}
+
+% 定义引用的颜色
+\usepackage{hyperref}
+\hypersetup{colorlinks = true, linktoc=all, linkcolor=red, urlcolor=blue}
+
+% ------------------------------------------------------------%
+% 定义定理环境
+\usepackage{amsthm}
+\newtheoremstyle{defstyle}{3pt}{3pt}{\kaishu}{-3pt}{\bfseries\color{red}}{}{0.5em}{\indent 【\thmname{#1} \thmnumber{\color{red}#2}】 \thmnote{(#3)}}
+\newtheoremstyle{thmstyle}{3pt}{3pt}{\kaishu}{-3pt}{\bfseries\color{second}}{}{0.5em}{\indent【\thmname{#1} \thmnumber{#2}】 \thmnote{(#3)}}
+\newtheoremstyle{prostyle}{3pt}{3pt}{\kaishu}{-3pt}{\bfseries\color{third}}{}{0.5em}{\indent【\thmname{#1} \thmnumber{#2}】 \thmnote{(#3)}}
+
+\theoremstyle{thmstyle} %theorem style
+  \newtheorem{theorem}{定理}[chapter]
+\theoremstyle{defstyle} % definition style
+  \newtheorem{definition}[theorem]{定义}
+  \newtheorem{lemma}[theorem]{引理}
+  \newtheorem{corollary}[theorem]{推论}
+\theoremstyle{prostyle} % proposition style
+  \newtheorem{proposition}[theorem]{命题}
+  \newtheorem{example}[theorem]{例题}
+  \newtheorem{remark}[theorem]{注}
+
+\renewenvironment{proof}[1][证明]{\par\underline{\textbf{#1.}} \;\fangsong}{\qed\par}
+\newenvironment{solution}{\par\underline{\textbf{解.}} \;\kaishu}{\qed\par}
+\newcommand{\intro}[1]{\rightline{\parbox[t]{5cm}{\footnotesize \fangsong\quad\quad #1 }}}
+% ------------------------------------------------------------%
+% ------------------------------------------------------------%
+% 设置章形式
+\usepackage{titlesec, titletoc}
+\linespread{1.2} 				
+\usepackage{fancyhdr}
+\fancyhf{}
+\renewcommand{\headrule}{\color{structurecolor}\hrule width\textwidth}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1pt}
+\fancypagestyle{plain}{\renewcommand{\headrulewidth}{0pt}\fancyhf{}\renewcommand{\headrule}{}}
+
+\fancyhead[c]{\color{structurecolor}\kaishu\rightmark}
+\fancyfoot[c]{\color{structurecolor}\small\thepage}
+
+\titleformat{\chapter}[display]{\Large} % 章节标题样式
+{\color{structurecolor}\filleft
+\parbox{1cm}{\vbox to 1.5cm{\vfill\hbox to 4cm{\hfill\Huge \bfseries \color{structurecolor}{Chapter} \thechapter \hfill}}}}
+{1ex}
+{\color{structurecolor} \titlerule[2pt]\large\bfseries \filright \vspace*{1em}}
+[\vspace*{1em} {\titlerule[2pt]}]
+
+\titleformat{\section}[frame]{\normalfont\color{structurecolor}}{\footnotesize \enspace \large \textcolor{structurecolor}{\S \,\thesection}\enspace}{6pt}{\Large\filcenter \bf \kaishu }
+
+
+\titleformat{\subsection}[hang]{\bfseries}{\large\bfseries\color{structurecolor}\thesubsection\enspace}{1pt}{\color{structurecolor}\large\bfseries\filright}
+
+\titleformat{\subsubsection}[hang]{\bfseries}{\large\bfseries\color{structurecolor}\thesubsubsection\enspace}{1pt}{\color{structurecolor}\large\bfseries\filright}
+% ------------------------------------------------------------%
+% 设置封面
+\usepackage{titling}
+\renewcommand*{\maketitle}{ % 重新定义\maketitle 命令，将文档标题页的外观和内容进行自定义。
+    \begin{titlepage}
+    \newgeometry{margin = 0in}
+    \parindent=0pt
+    \includegraphics[width=\linewidth]{cover.png}
+    \vfill
+    \begin{center}
+        \parbox{0.618\textwidth}{ % 0.618\textwidth 表示将文本宽度按照黄金分割比例的近似值的0.618进行设置，以获得视觉上更加优美的布局效果。
+        \hfill {\bfseries \Huge \thetitle} \\[0.6pt]  
+        \rule{0.618\textwidth}{4pt} \\ 
+    }
+    \end{center}
+    \vfill
+    \begin{center}
+        \parbox{0.618\textwidth}{
+        \hfill\Large
+        \kaishu 
+          \begin{tabular}{r|}
+          作者：\theauthor \\ 
+          时间：\thedate \\
+        \end{tabular}
+        }
+    \end{center}
+    \vfill
+    \begin{center}
+        \parbox[t]{0.7\textwidth}{\centering \kaishu }
+    \end{center}
+    \vfill
+\end{titlepage}
+\restoregeometry
+\thispagestyle{empty}
+}
+
+
+% ------------------------------------------------------------%
+
+
+\title{实变泛函笔记}
+\author{黄浩宇}
+\date{\today}
+
+\begin{document}
+\frontmatter % 将文档的页面编号格式设置为罗马数字，并且不对章节进行编号。通常用于文档的前言部分
+
+\maketitle % 生成标题页，显示文档的标题、作者等信息。
+
+\tableofcontents % 自动生成目录，列出文档中的章节标题及对应的页码。
+
+\mainmatter % 将文档的页面编号格式设置为阿拉伯数字，并开始对章节进行编号。通常用于文档的正文部分。
+
+\chapter{第一章~集合与运算}
+
+\section{第一节}
+
+    \begin{theorem}[此处写定理名称]
+        定理环境。
+    \end{theorem}
+
+\begin{definition}[集合列的单调上升和单调下降]
+\begin{equation}
+\begin{array}{r}
+A_n \uparrow A \text { means } A_1 \subset A_2 \subset A_3 \subset \ldots \text { and } A=\cup A_n \\
+A_n \downarrow A \text { means } A_1 \supset A_2 \supset A_3 \supset \ldots \text { and } A=\cap A_n \\
+\end{array}
+\end{equation}
+\end{definition}
+
+\begin{definition}[集合的上极限和下极限]
+\begin{equation}
+\begin{array}{r}
+\text{下极限：} \liminf\limits_{n \rightarrow \infty} A_n := \cup_{n=1}^{\infty} \cap_{k \geq n} A_k \\
+\text{上极限：}\limsup\limits_{n \rightarrow \infty} A_n := \cap_{n=1}^{\infty} \cup_{k \geq n} A_k \\
+\end{array}
+\end{equation}
+\end{definition}
+
+
+    \begin{proposition}
+        命题环境。
+    \end{proposition}
+
+    \begin{proof}
+        证明如下：$\cdots$
+    \end{proof}
+
+    \begin{solution}
+        这里写解。
+    \end{solution}
+
+\section{第二节~映射}
+
+\begin{theorem}
+可数集的可数并也是可数的。
+\end{theorem}
+
+例：有理数集 $\mathbb{Q}$ 是可数的
+
+\begin{theorem}[1.2.19~无最大基数定理]
+若 $A$ 是非空集合，则 $A$ 和其幂集 $2^A$ 不等势。
+\end{theorem}
+
+\begin{theorem}
+\begin{equation}
+\mathbb{R} \sim[0,1] \sim \{0,1\}^{\mathbb{N}} \sim 2^{\mathbb{N}}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+$\{0,1\}^{\mathbb{N}} \sim 2^{\mathbb{N}}$ :
+\end{proof}
+
+\begin{theorem}
+$\mathbb{R}$ is uncountable.
+\end{theorem}
+
+\begin{theorem}
+\begin{equation}
+f: A \rightarrow B \subset A \text { injective } \quad \Rightarrow \quad A \sim B 
+\end{equation}
+\end{theorem}
+
+\begin{theorem}[Schröder-Bernstein]
+\begin{equation}
+f: A \rightarrow B \text { and } g: B \rightarrow A \text { are injective } \Rightarrow A \sim B 
+\end{equation}
+\end{theorem}
+
+\section{第三节 n维欧氏空间$\mathbb{R}^n$}
+
+\subsection{欧式空间}
+
+\subsection{度量空间}
+
+\begin{definition}[距离/度量]
+Given a nonempty set $X, d(\cdot, \cdot): X \times X \rightarrow \mathbb{R}^{+}$is called a metric/distance if $\forall x, y, z \in X$ :
+- Positivity
+$$
+d(x, y) \geq 0 \quad \text { and } d(x, y)=0 \text { iff } x=y ;
+$$
+- Symmetry
+$$
+d(x, y)=d(y, x)
+$$
+- Triangle inequality
+$$
+d(x, z) \leq d(x, y)+d(y, z) .
+$$
+$(X, d)$ is called a metric (distance) space.
+\end{definition}
+
+
+\begin{definition}[1.3.6~收敛点列]
+Let $x, x_1, x_2, \ldots \in(X, d)$. If $\forall \epsilon>0, \exists N$ s.t.
+$$
+d\left(x_n, x\right)<\epsilon, \quad n>N
+$$
+then we say that the sequence $\left(x_n\right)$ to $x$; written
+$$
+\lim _{n \rightarrow \infty} x_n=x .
+$$
+\end{definition}
+
+
+\begin{definition}[1.3.5]
+Let $(X, \rho)$ be a metric space and let $S \subset X$.
+\begin{itemize}
+    \item $x$ is called an interior point of $S$ if $\exists \delta>0$ s.t. $B_\delta(x) \subset S$
+    \item $x$ is called an exterior point of $S$ if $\exists \delta>0$ s.t. $B_\delta(x) \cap S=\emptyset$
+    \item $x$ is called a boundary point of $S$ if $\forall \delta>0, B_\delta(x) \cap S \neq \emptyset$ and $B_\delta(x) \cap S \neq \emptyset$
+    \item $x$ is called an isolated point of $S$ if $\exists \delta>0$ s.t. $B_\delta(x) \cap S=\{x\}$. 
+    \item 与孤立点对应的概念是聚点
+    \item $\partial S:=\{$ all boundary points of $S\}$
+    \item $\operatorname{int} S:=\{$ all interior points of $S\}$
+    \item $\bar{S}:=\operatorname{int} S \cup \partial S$ is called the closure of $S$.
+    \item $A$ is called dense in $X$ if $\bar{A}=X$.
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[1.3.9] 
+Finite union of closed sets is still closed.
+The union of arbitrarily many open sets is still open.
+\end{theorem}
+
+\begin{theorem}[1.3.11] 
+Finite intersection of open sets is still open.
+The intersection of arbitrarily many closed sets is still closed.
+\end{theorem}
+
+\begin{theorem} 
+$A$ is closed iff $A \ni a_n \rightarrow a$ implies $a \in A$.
+\end{theorem}
+
+
+\begin{theorem} \
+
+\begin{itemize}
+    \item $\Omega$ is open iff $\Omega=\operatorname{int} \Omega$.
+    \item $\Omega$ is closed iff $\Omega=\overline{\Omega}$.
+    \item $\Omega$ is closed iff $\Omega \supset \Omega^\prime$.
+\end{itemize}
+\end{theorem}
+
+\begin{theorem}[1.3.16]
+$\emptyset \neq A \subset \mathbb{R}$ is open implies $A$ is a countable union of disjoint union of open intervals:
+$$
+\left.A=\sqcup I_k, \quad I_k=\right] a_k, b_k[
+$$
+\end{theorem}
+
+
+
+
+\subsection{Cantor~set}
+
+
+\begin{definition}[Cantor集]
+Let $C_0=[0,1]$ and
+$$
+C_{n+1}=\frac{1}{3} C_n \cup\left(\frac{2}{3}+\frac{1}{3} C_n\right), \quad n=0,1,2, \ldots
+$$
+
+Then
+$$
+C:=\cap_{n=0}^{\infty} C_n
+$$
+is called the standard Cantor set (or, Cantor ternary set).
+Geometrically speaking, $C$ is created by iteratively deleting the open middle third from a set of segments.
+\end{definition}
+
+\begin{theorem}[Cantor集的性质] \
+
+\begin{enumerate}[1)]
+    \item $C=\left\{\sum_{n=1}^{\infty} \frac{x_n}{3^n}: x_n=0\right.$ or 2$\}$
+    \item $C$ is closed
+    \item $\operatorname{int} C=\emptyset$
+    \item $C$ is uncountable
+    \item $C$ is a measure zero set
+    \item $C+C=[0,2]$
+\end{enumerate}
+\end{theorem}
+
+
+
+
+\subsection{Borel~sets}
+
+\begin{definition}[1.3.12~$F_\sigma, G_\delta$ 集]
+$F_\sigma$ 集是可数个闭集的并, $G_\delta$ 集是可数个开集的交.
+\end{definition}
+
+\begin{definition}[1.3.13~$\sigma$ 代数]
+Let $\mathcal{F}$ be a family of subsets of $X$. If
+\begin{itemize}
+  \item $\emptyset, X \in \mathcal{F}$
+  \item $A \in \mathcal{F}$ implies $A^c \in \mathcal{F}$
+  \item $A_n \in \mathcal{F}, n \in \mathbb{N}$ implies $\cup A_n \in \mathcal{F}$
+\end{itemize}
+then $\mathcal{F}$ is called a $\sigma$-algebra of $X$.
+\end{definition}
+
+\begin{definition}[1.3.14]
+Let $\Sigma \subset 2^X$. The smallest $\sigma$-algebra containing $\Sigma$ is called the $\sigma$-algebra generated by $\Sigma$ and is denoted by $\mathcal{F}(\Sigma)$.
+\end{definition}
+
+\begin{definition}[1.3.15]
+Let $\mathcal{O}$ be the family of all open sets in $\mathbb{R}^d$. Then $\mathcal{F}(\mathcal{O})$ is called Borel $\sigma$-algebra and is denoted by $\mathcal{B}$. Each element in $\mathcal{B}$ is called a Borel set.
+\end{definition}
+
+
+\begin{theorem}[1.3.20]
+Let $f: \mathbb{R}^d \rightarrow \mathbb{R}$. The following are equivalent
+\begin{itemize}
+  \item $f$ is continuous
+  \item $\{f<c\}$ and $\{f>c\}$ are open for each $c$
+  \item $\{f \leq c\}$ and $\{f \geq c\}$ are closed for each $c$
+\end{itemize}
+\end{theorem}
+
+
+\subsection{Basic~Theorems~on~Completeness}
+
+\begin{definition}[5.1.3~柯西列] 
+Let $(X, d)$ be a metric space. $\left(a_n\right) \subset X$ is called a Cauchy sequence if $\forall \epsilon>0, \exists N=N(\epsilon)$ s.t. if $m>n>N$, then
+$$
+d\left(x_m, x_n\right)<\epsilon
+$$
+\end{definition}
+
+\begin{definition}[5.1.4~完备的] 
+A metric space $(X, d)$ is called complete if any Cauchy sequence $\left(a_n\right) \subset X$ has a limit.
+\end{definition}
+
+
+\begin{theorem}[1.3.23~柯西收敛准则]
+Let $(X, d)$ be a complete metric space. Then $\left(a_n\right) \subset X$ is Cauchy iff $\lim a_n$ exists.
+\end{theorem}
+
+\begin{definition}[一致收敛~uniform~convergence]
+暂无
+\end{definition}
+
+\begin{definition}[逐点收敛~pointwise~convergence]
+暂无
+\end{definition}
+
+\begin{theorem}
+UC implies Pointwise convergence (PC)
+\end{theorem}
+
+\begin{theorem}[一致收敛可以保持连续性]
+$f_n \in C(z,d),~ f_n \rightrightarrows f \Rightarrow f \in C(z)$.
+\end{theorem}
+
+\begin{theorem}
+$\left(C[0,1]^d\right)$ is complete under the metric $\|\cdot\|_{\infty}$.
+\end{theorem}
+
+\begin{theorem}[1.3.25~Cantor nested theorem]
+Let $(X, d)$ be a complete metric space. If
+\begin{itemize}
+  \item $A_1 \supset A_2 \supset \ldots$
+  \item $A_n \neq \emptyset$ are closed
+  \item $\operatorname{diam} A_n \rightarrow 0$
+\end{itemize}
+then $\exists ! \xi \text { s.t. }\{\xi\}=\cap A_n $.
+\end{theorem}
+
+\begin{definition}[开覆盖]
+设 $A \subset \mathbb{R}^n, \mathcal{F}$ 是 $\mathbb{R}^n$ 的子集族. 若 $A \subset \cup_{B \in \mathcal{F}} B$, 则称 $\mathcal{F}$ 是集 $A$的一个覆盖; 当 $\mathcal{F}$ 是开集族时, 称 $\mathcal{F}$ 是集 $A$ 的开覆盖; 当 $\mathcal{F}$ 是有限族时，称 $\mathcal{F}$ 是集 $A$ 的有限覆盖. 若 $\mathcal{F}^{\prime}$ 也是 $\mathbb{R}^n$ 的子集族, $\mathcal{F}^{\prime} \subset \mathcal{F}$,当 $\mathcal{F}^{\prime}$ 是集 $A$ 的覆盖时, 称 $\mathcal{F}^{\prime}$ 是 $\mathcal{F}$ 的子覆盖
+\end{definition}
+
+\begin{definition}[1.3.27~紧集]
+$\Omega \subset X$ is called compact if each open cover of $\Omega$ has a finite subcover.
+\end{definition}
+
+\begin{theorem}[1.3.29~Heine-Borel]
+$A \subset \mathbb{R}^d$ is bounded \& closed $\Leftrightarrow A$ is compact.
+\end{theorem}
+
+\begin{theorem}[1.3.26~Bolzano-Weierstrass]
+$\left(a_n\right) \subset \mathbb{R}^d$ is bounded $\Rightarrow\left(a_n\right)$ has a convergent subsequence.
+\end{theorem}
+
+\begin{definition}[列紧]
+任何序列都有收敛子列（还收敛到这个空间中）
+\end{definition}
+
+\begin{theorem}
+列紧等价于紧，紧能推出有界闭，有界闭推不出紧。
+\end{theorem}
+
+\begin{theorem}
+  定义在紧集上的连续函数必一致连续。
+\end{theorem}
+
+
+\chapter{第二章 Lebesgue测度}
+
+\section{第一节 Lesbegue外测度与可测集}
+
+\begin{definition}[外测度]
+\begin{equation}
+m^*(A) := \text{inf} \left\{\sum_{n=1}^{\infty} \left\vert I_n \right\vert : A \subset \bigcup I_n, I_n=\text{open box} \right\} 
+\end{equation}
+称为集合A的外测度
+\end{definition}
+
+\begin{theorem}[2.1.2] \
+
+$\mathbb{R}^n$ 中点集外测度具有以下性质:
+
+(1) 非负性: $m^*(E) \geq 0, m^*(\emptyset)=0$;
+
+(2) 单调性: 若 $E_1 \subset E_2$, 则 $m^*\left(E_1\right) \leq m^*\left(E_2\right)$;
+
+(3) 次可加性: $m^*\left(\bigcup_{k=1}^{\infty} E_k\right) \leq \sum_{k=1}^{\infty} m^*\left(E_k\right)$;
+
+(4) 平移不变性: $m^*(E+\{x\})=m^*(E), \forall x \in \mathbb{R}^n$, 其中
+$$
+E+\{x\}=\{y+x \mid y \in E\} .
+$$
+
+\end{theorem}
+
+
+\begin{definition}[可测集]
+设 $E \subset \mathbb{R}^n$. 若 $\forall T \subset \mathbb{R}^n$, 有
+\begin{equation}
+m^*(T)=m^*(T \cap E)+m^*\left(T \cap E^{\mathrm{c}}\right) \label{Caratheodory}
+\end{equation}
+称 $E$ 是 Lebesgue 可测集, 简称为可测集. 可测集全体记作 $\mathfrak{M}$, 称为 $\mathbb{R}^n$ 的可测集类. 如果要强调可测集类的维数, 则记成 $\mathfrak{M}_n$.
+\end{definition}
+
+当 $E \in \mathfrak{M}$ 时, $m^*(E)$ 称为 $E$ 的测度, 简记作 $m(E)$. 关系式 \eqref{Caratheodory} 称为 Caratheodory 条件; $2^{\mathbb{R}^n} \backslash \mathfrak{M}$ 中的元素称为不可测集.
+
+由外测度的次可加性, 条件 \eqref{Caratheodory} 与下列条件等价：对于 $\forall T \subset$ $\mathbb{R}^n$, 有
+$$
+m^*(T) \geq m^*(T \cap E)+m^*\left(T \cap E^{\mathrm{c}}\right) .
+$$
+
+\begin{theorem}[2.1.4]
+若 $m^*(E)=0$, 则 $E \in \mathfrak{M}$.
+\end{theorem}
+
+\begin{theorem}[2.1.5]
+$\mathbb{R}^n$ 中的开矩体 $I \in \mathfrak{M}$, 且 $m(I)=\left\vert I \right\vert$
+\end{theorem}
+
+\begin{theorem}[2.1.6~可测集性质] \
+
+(1) $\emptyset \in \mathfrak{M}, m(\emptyset)=0$; 
+
+(2) 若 $E \in \mathfrak{M}$, 则 $E^c \in \mathfrak{M}$; 
+
+(3) 若 $E, F \in \mathfrak{M}$, 则 $E \cup F, E \cap F, E \backslash F \in \mathfrak{M}$; 
+
+(4) 可列可加性: 若 $E_j \in \mathfrak{M}, j=1,2, \cdots$, 则 $\bigcup_{n=1}^{\infty} E_j \in \mathfrak{M}$; 若还有 $E_i \cap E_j=\emptyset(i \neq j)$, 则
+$$
+m\left(\bigcup_{j=1}^{\infty} E_j\right)=\sum_{j=1}^{\infty} m\left(E_j\right) .
+$$
+
+\end{theorem}
+
+\begin{theorem}[2.1.7]
+若 $E_j \in \mathfrak{M} (j=1,2,3,\cdots)$, 则 $\bigcap\limits_{j=1}^{\infty} E_j \in \mathfrak{M}$. 
+\end{theorem}
+
+\begin{theorem}
+G is open $\Rightarrow$ G is a countable union of open boxes. 这意味着 $\mathbb{R}^n$ 中的任意开集是可测集. 从而由开集生成的 Borel $\sigma$ 代数 $\mathfrak{B} \subset \mathfrak{M}$, 即任何 Borel 集均是可测的.
+\end{theorem}
+
+\begin{theorem}[2.1.8]
+若有递增可测集列 $E_1 \subset E_2 \subset \cdots \subset E_k \subset \cdots$, 则 $\lim _{k \rightarrow \infty} E_k \in \mathfrak{M}$, 且
+$$
+m\left(\lim _{k \rightarrow \infty} E_k\right)=\lim _{k \rightarrow \infty} m\left(E_k\right) .
+$$
+\end{theorem}
+
+\begin{theorem}[2.1.9]
+若 $E_1 \supset E_2 \supset \cdots \supset E_k \supset \cdots$ 是递减可测集列, 且 $m\left(E_1\right)<\infty$, 则
+$$
+m\left(\lim _{k \rightarrow \infty} E_k\right)=\lim _{k \rightarrow \infty} m\left(E_k\right) .
+$$
+\end{theorem}
+
+\begin{theorem}[2.1.10~平移不变性]
+若 $E \in \mathfrak{M}$, 则 $\forall x \in \mathbb{R}^n, E+\{x\} \in \mathfrak{M}$ 成立.
+\end{theorem}
+
+\begin{theorem}[2.1.11]
+若 $E$ 是可测集，则存在 Borel 集 $G=G_{\delta},F=F_{\sigma}$，使得 $F \subset E \subset G$，且 $m(F) = m(E) = m(G)$
+\end{theorem}
+
+
+
+
+
+
+
+
+\section{第二节 Lesbegue可测函数}
+
+\begin{definition}[可测函数]
+设 $E \subset \mathbb{R}^n$ 是可测集, $f$ 是 $E$ 上的函数, 如果对于任䚌常数 $t$, 集合
+\begin{equation}
+E(f>t) \stackrel{\text { def }}{=}\left\{x \in \mathbb{R}^n \mid x \in E, f(x)>t\right\}
+\end{equation}
+
+都是可测集, 则称函数 $f$ 是 $E$ 上的 Lebesgue 可测函数. 简称为 $E$ 上的可测函数. 也可以称 $f$ 在 $E$ 上可测.
+约定以 $\mathfrak{M}(E)$ 记 $E$ 上的 Lebesgue 可测函数的全体.
+\end{definition}
+
+\begin{theorem}[2.2.2]
+设 $f$ 是可测集 $E$ 上一个实函数, 则以下诸条件互相等价:
+\begin{equation}
+\begin{gathered}
+(1) f \in \mathfrak{M}(E); \\
+(2) \forall t \in \mathbb{R}, E(f \geq t) \in \mathfrak{M}; \\
+(3) \forall t \in \mathbb{R}, E(f<t) \in \mathfrak{M}; \\
+(4) \forall t \in \mathbb{R}, E(f \leq t) \in \mathfrak{M}. 
+\end{gathered}
+\end{equation}
+\end{theorem}
+
+
+
+\begin{definition}[简单函数]
+设 $E \subset \mathbb{R}^n$ 是可测集, $E_1, E_2, \cdots, E_m$ 是 $E$ 的互不相交的可测子集, 且 $\bigcup_{j=1}^m E_j=E, \alpha_1, \alpha_2, \cdots, \alpha_m$ 是常数, 称 $E$ 上函数
+\begin{equation}
+\psi(x)=\sum_{i=1}^m \alpha_i \chi_{E_i}(x)
+\end{equation}
+
+为简单函数. 特别地, 当每个 $E_i$ 是矩体时, 称 $\psi(x)$ 是阶梯函数.
+\end{definition}
+
+\begin{theorem}[2.2.4]
+可测集上的简单函数是可测的.
+\end{theorem}
+
+\begin{theorem}[2.2.5~简单函数逼近定理]
+设 $E \subset \mathbb{R}^n$ 是可测集. 则 $f(x)$ 是 $E$ 上非负可测函数的充分必要条件是, 存在 $E$ 上的非负简单函数列 $\left\{\psi_k(x)\right\}$, 使得
+$$
+\begin{gathered}
+0 \leq \psi_1(x) \leq \psi_1(x) \leq \cdots \leq \psi_k(x) \leq \cdots \\
+\lim _{k \rightarrow \infty} \psi_k(x)=f(x), \quad \forall x \in E
+\end{gathered}
+$$
+\end{theorem}
+
+\begin{theorem}[2.2.6]
+若 $f(x), g(x)$ 是 $E$ 上的可测函数, 则 $c f(x)(c \in$ $\mathbb{R}), f(x) g(x)$ 是 $E$ 上的可测函数; $f(x)+g(x)$ 与 $f(x) / g(x)$ 是其有定义的集合上的可测函数.
+\end{theorem}
+
+\begin{theorem}[2.2.7]
+设 $E \subset \mathbb{R}^n$ 是可测集, 则 $E$ 上连续函数均为可测函数, 即 $C(E) \subset \mathfrak{M}(E)$.
+\end{theorem}
+
+\begin{theorem}[2.2.8]
+设 $\left\{f_k(x)\right\}$ 是可测集 $E \subset \mathbb{R}^n$ 上的可测函数列, 则下列函数:
+$$
+\begin{gathered}
+(1) \sup _{k \geq 1}\left\{f_k(x)\right\} \\
+(2) \inf _{k \geq 1}\left\{f_k(x)\right\} \\
+(3) \varlimsup_{k \rightarrow \infty} f_k(x) \\
+(4) \varliminf_{k \rightarrow \infty} f_k(x) 
+\end{gathered}
+$$
+都是 $E$ 上的可测函数.
+\end{theorem}
+
+\begin{theorem}[2.2.9]
+设 $\left\{f_k(x)\right\}$ 是可测函数 $E$ 上的可测函数列, 且有
+$$
+\lim _{k \rightarrow \infty} f_k(x)=f(x),
+$$
+则 $f(x)$ 是 $E$ 上的可测函数.
+\end{theorem}
+
+\begin{theorem}[2.2.10]
+若 $E \subset \mathbb{R}^n$ 是可测集, 则 $E$ 上实值函数 $f(x)$ 是可测的充分必要条件是, $f^{+}(x), f^{-}(x)$ 都是 $E$ 上的可测函数. 当 $f(x)$在 $E$ 上可测时, $|f(x)|$ 在集合 $E$ 上也是可测的.
+\end{theorem}
+
+\begin{theorem}[2.2.11]
+设 $f(x)$ 是 $\mathbb{R}$ 上连续函数, $g(x)$ 是 $\mathbb{R}^n$ 中可测集 $E$上的可测函数, 则复合函数
+$$
+h(x)=f(g(x))
+$$
+是 $E$ 上的可测函数.
+\end{theorem}
+
+\begin{theorem}[2.2.12]
+设 $E \subset \mathbb{R}^n$ 是可测集, $f(x), g(x)$ 是 $E$ 上两个函数. 如果 $f(x)$ 与 $g(x)$ 在 $E$ 上几乎处处相等, 即存在一个焦合 $E_0 \subset E$, 满足 $m\left(E_0\right)=0$, 使得函数 $f$ 与 $g$ 在集合 $E \backslash E_0$ 上处处相等，则当其中一个在 $E$ 上可测时, 另一个在 $E$ 上也可测.
+\end{theorem}
+
+
+
+
+
+
+\section{第三节 Lesbegue可测函数列的收敛性~week5~03/26}
+
+\begin{definition}[一致收敛]
+设 $f(x), f_1(x), f_2(x), \cdots, f_k(x), \cdots$ 是定义在点集 $E$上的实值函数. 若对于任意 $\varepsilon>0$, 存在 $K \in \mathbb{N}$, 使得对于任意 $k \geq K$,任意 $x \in E$, 有
+\begin{equation}
+\left|f_k(x)-f(x)\right|<\varepsilon,
+\end{equation}
+则称 $\left\{f_k(x)\right\}$ 在 $E$ 一致收敛到 $f$, 记作 $f_k \rightrightarrows f$ .
+
+设 $E$ 是可测集. 若 $\forall \delta>0, \exists E_\delta \subset E$, 使得 $m\left(E \backslash E_\delta\right)<\delta$, 在 $E_\delta$上 $f_k \rightrightarrows f$, 则称 $\left\{f_k(x)\right\}$ 在 $E$ 上几乎一致收敛到 $f$, 记作 $f_k \xrightarrow{\text { a.u }} f$ (其中 a.u. 表示几乎一致 (almostly uniform)).
+\end{definition}
+
+\begin{definition}[几乎处处收敛]
+设 $f(x), f_1(x), f_2(x), \cdots, f_k(x), \cdots$ 是定义在点集 $E \subset \mathbb{R}^n$ 上的广义实值函数. 若存在 $E$ 中点集 $Z$, 有 $m(Z)=0$, 及对每个元素 $x \in E \backslash Z$, 有 $\lim\limits _{k \rightarrow \infty} f_k(x)=f(x)$, 则称 $\left\{f_k(x)\right\}$ 在 $E$ 上几乎处处收敛于 $f(x)$, 并简记为 $f_k \rightarrow f$, a.e. $[E]$ 或 $f_k \xrightarrow{\text { a.e. }} f$.
+\end{definition}
+
+\begin{theorem}[2.3.3~Egorov~Thm]
+\begin{equation}
+m(A)<\infty,~f,f_n \in \mathfrak{M}(A),~f_n \rightarrow f ~ a.e. \Rightarrow \forall \varepsilon>0,~\exists S\subset A,~m(A\backslash S)<\varepsilon,~ s.t. ~ f_n \rightrightarrows f ~ on ~ S
+\end{equation}
+（设 $f(x), f_1(x), f_2(x), \cdots, f_k(x), \cdots$ 是可测集 $E$ 上几乎处处有限的可测函数集, 并且 $m(E)<\infty$. 若 $f_k \rightarrow$ $f$, a.e. $[E]$, 则 $\left\{f_k(x)\right\}$ 几乎一致收玫于 $f(x)$.）
+\end{theorem}
+
+\begin{definition}[依测度收敛]
+设 $f(x), f_1(x), f_2(x), \cdots, f_k(x), \cdots$ 是可测集 $E$ 上几乎处处有限的可测函数. 若对于任意给定的 $\varepsilon>0$, 有
+\begin{equation}
+\lim _{k \rightarrow \infty} m\left(E\left(\left|f_k-f\right|>\varepsilon\right)\right)=0,
+\end{equation}
+则称 $\left\{f_k(x)\right\}$ 在 $E$ 上依测度收敛到函数 $f(x)$, 记为 $f_k \xrightarrow{m} f$.
+\end{definition}
+
+\begin{theorem}[2.3.5]
+若函数列 $\left\{f_k(x)\right\}$ 在 $E$ 上依测度收敛于函数 $f(x)$ 与 $g(x)$, 则 $f(x)$ 与 $g(x)$ 几乎处处相等.
+\end{theorem}
+
+\begin{theorem}[2.3.6]
+设函数列 $\left\{f_k(x)\right\}$ 是可测集 $E$ 上的几乎处处有限的可测函数列且 $m(E)<\infty$. 若 $\left\{f_k(x)\right\}$ 在 $E$ 上几乎处处收敛, 则 $\left\{f_k(x)\right\}$在 $E$ 上依测度收敛于同一极限函数.（几乎处处收敛推出依测度收敛）
+\end{theorem}
+
+\begin{theorem}[2.3.7~Riesz~Thm]
+\begin{equation}
+f,f_n \in \mathfrak{M}(A),~ f_n \xrightarrow{m} f  \Rightarrow \exists n_j \uparrow \infty, ~ s.t. ~ f_{n_j} \rightarrow f ~ a.e. ~ A
+\end{equation}
+即：设 $f(x),\left\{f_k(x)\right\}$ 是可测集 $E$ 上几乎处处有限的可测函数列. 若 $\left\{f_k(x)\right\}$ 在 $E$ 上依测度收敛于 $f(x)$, 则存在子列 $\left\{f_{k_i}(x)\right\}$, 使得
+\begin{equation}
+\lim _{i \rightarrow \infty} f_{k_i}(x)=f(x), \quad \text { a.e. }[E] .
+\end{equation}
+\end{theorem}
+
+
+\begin{theorem}[2.3.10~Lusin~Thm]
+\begin{equation}
+f \in \mathfrak{M}(A) \Rightarrow \forall \varepsilon>0,~ \exists S \subset A, ~ S ~ closed, ~ s.t. ~ (1)m(A\backslash S)<\varepsilon; ~(2)~ f \in C(S)
+\end{equation}
+（设 $f(x)$ 是可测集 $E$ 上的几乎处处有限的可测函数, 则对任给 $\delta>0$, 存在 $E$ 中的一个闭集 $F$, 满足 $m(E \backslash F)<\delta$,使得 $f(x)$ 是 $F$ 上的连续函数.）
+\end{theorem}
+
+\begin{theorem}[2.3.11~推论]
+若 $f(x)$ 是可测集 $E \subset \mathbb{R}^n$ 上几乎处处有限的可测函数，则存在 $\mathbb{R}^n$ 上的连续函数列 $\left\{ g_k(x) \right\}$，使 $\left\{ g_k(x) \right\}$ 在 $E$ 上几乎处处收敛到 $f(x)$.
+\end{theorem}
+
+
+
+
+\chapter{第三章~Lebesgue积分}
+
+\section{第一节~Lesbegue可测函数的积分}
+
+\begin{definition}[非负简单函数的积分]
+设 $h(x)$ 是可测集 $E \subset \mathbb{R}^n$ 上的非负可测简单函数
+$$
+h(x)=\sum_{j=1}^m a_j \chi_E,(x), \quad \forall x \in E .
+$$
+定义函数 $h(x)$ 在可测集 $E$ 上的积分为
+$$
+\int_E h(x) \mathrm{d} x=\sum_{j=1}^m a_j m\left(E_j\right) .
+$$
+这里积分符号内的 $\mathrm{d} x$ 是 $n$ 维空间 $\mathbb{R}^n$ 上的 Lebesgue 测度的标志. (注意, 前面已经约定 $0 \cdot \infty=0$ )
+\end{definition}
+
+函数 $h(x)$ 的下方图 $\left\{(x, y) \in \mathbb{R}^{(n+1)} \mid x \in E, 0 \leq y \leq h(x)\right\}$ 是 $m$个高为 $a_j$, 底面是 $E_j$ 的柱体. 因此 (3.1.2) 式的几何意义是 $h(x)$ 的下方图的体积.
+
+\vspace{0.4cm}
+
+非负简单函数积分的性质：
+
+(1) 若 $a$ 是非负常数, 则 $\quad \int_E a h(x) \mathrm{d} x=a \int_E h(x) \mathrm{d} x$.
+
+(2) 设 $g(x)$ 也是 $E$ 上的非负简单可测函数，则 $\int_E(h(x)+g(x)) \mathrm{d} x=\int_E h(x) \mathrm{d} x+\int_E g(x) \mathrm{d} x$.
+
+(3) 设 $\left\{E_k\right\}$ 是 $E$ 中递增可测子集合列, 满足 $\lim _{k \rightarrow \infty} E_k=E, h(x)$ 是 $E$ 上的非负可测简单函数,则  
+$$
+\lim _{k \rightarrow \infty} \int_{E_k} h(x) \mathrm{d} x=\int_E h(x) \mathrm{d} x
+$$
+
+
+\begin{definition}[非负可测函数的积分]
+设 $f(x)$ 是可测集 $E$ 上的非负可测函数, 定义函数 $f(x)$ 在 $E$ 上的积分
+$$
+\begin{aligned}
+& \int_E f(x) \mathrm{d} x \\
+& \quad=\sup \left\{\begin{array}{l|l}
+\int_E h(x) \mathrm{d} x & \begin{array}{l}
+h(x) \text { 是 } E \text { 上非负简单可测函数, } \\
+\text { 且 } h(x) \leq f(x)
+\end{array}
+\end{array}\right\},
+\end{aligned}
+$$
+\end{definition}
+这里的积分可以是 $+\infty$; 若有限，则称为可积。
+
+\vspace{0.4cm}
+
+非负可测函数积分的性质：
+
+(1) 若 $m(E)=0$, 则 $E$ 上的非负可测函数 $f(x)$ 均可积, 并且显然有
+$$
+\int_E f(x) \mathrm{d} x=0 ;
+$$
+
+(2) 设 $f(x)$ 是 $E$ 上非负可测函数, $A$ 是 $E$ 中的可测子集, 则
+$$
+\int_A f(x) \mathrm{d} x=\int_E f(x) \chi A(x) \mathrm{d} x \text {. }
+$$
+
+(3) 设 $f(x), g(x)$ 是 $E$ 上的非负可测函数. 若 $f(x) \leq g(x), x \in E$, 则
+$$
+\int_E f(x) \mathrm{d} x \leq \int_E g(x) \mathrm{d} x .
+$$
+这是因为满足条件 $h(x) \leq f(x)$ 的非负简单可测函数必有 $h(x) \leq g(x)$
+
+(4) 若 $m(E)<\infty$, 则 $E$ 上的有界非负可测函数必是可积的.
+
+
+
+\begin{theorem}[3.1.3~Levi 定理]
+设 $\left\{f_k(x)\right\}$ 是可测集 $E$ 上的非负可测函数列, 满足
+$$
+f_1(x) \leq f_2(x) \leq \cdots \leq f_k(x) \leq \ldots,
+$$
+
+且有
+$$
+\lim _{k \rightarrow \infty} f_k(x)=f(x), \quad x \in E,
+$$
+
+则
+$$
+\lim _{k \rightarrow \infty} \int_E f_k(x) \mathrm{d} x=\int_E f(x) \mathrm{d} x .
+$$
+
+\end{theorem}
+
+\begin{theorem}[3.1.4~积分的线性性质]
+设 $f(x), g(x)$ 是可测集 $E$ 上的非负可测函数，对于任给非负常数 $\alpha, \beta$, 有
+$$
+\int_E(\alpha f(x)+\beta g(x)) \mathrm{d} x=\alpha \int_E f(x) \mathrm{d} x+\beta \int_E g(x) \mathrm{d} x .
+$$
+\end{theorem}
+
+\begin{theorem}[3.1.5]
+设 $f(x), g(x)$, 是 $E$ 上的非负可测函数. \
+
+(1) 若 $f(x)=g(x)$, a.e. $[E]$, 则
+$$
+\int_E f(x) \mathrm{d} x=\int_E g(x) \mathrm{d} x ;
+$$
+
+(2) 若 $\int_E f(x) \mathrm{d} x<\infty$, 则 $f(x)<\infty$, a.e. $[E]$.
+\end{theorem}
+
+\begin{theorem}[3.1.6]
+设 $f(x)$ 是可测集 $E$ 上的非负可测函数. 若
+$$
+\int_E f(x) \mathrm{d} x=0,
+$$
+
+则 $f(x)=0$, a.e. $[E]$.
+\end{theorem}
+
+\begin{definition}[3.1.7~一般可测函数的积分]
+设 $f(x) \in \mathfrak{M}(E)$. 若 $f^{+}(x)$ 和 $f^{-}(x)$ 中至少有一个是可积的, 则称
+$$
+\int_E f(x) \mathrm{d} x=\int_E f^{+}(x) \mathrm{d} x-\int_E f^{-}(x) \mathrm{d} x
+$$
+
+为 $f(x)$ 在 $E$ 上的积分. 当上式右端两个积分值皆为有限时, 称 $f(z)$在 $E$ 上是 Lebesgue 可积的 (简称可积的), 或称 $f(x)$ 是 $E$ 上的可硕函数. 在 $E$ 上可积的函数全体记为 $L(E)$.
+\end{definition}
+
+显然
+$$
+\int_E|f(x)| \mathrm{d} x=\int_E f^{+}(x) \mathrm{d} x+\int_E f^{-}(x) \mathrm{d} x,
+$$
+
+\begin{theorem}[3.1.8]
+设 $f(x)$ 是 $E$ 上可测函数, 则 $f \in L(E)$ 的充分必要条件是, $|f| \in L(E)$, 且有下列不等式
+$$
+\left|\int_E f(x) \mathrm{d} x\right| \leq \int_E|f(x)| \mathrm{d} x .
+$$
+\end{theorem}
+
+一般可测函数积分的性质:
+
+(1) 若 $f \in L(E)$, 则 $|f(x)|<\infty$, a.e. $[E]$;  
+
+(2) 若 $f=g$, a.e. $[E], f \in L(E)$, 则 $g \in L(E)$, 且
+$$
+\int_E f(x) \mathrm{d} x=\int_E g(x) \mathrm{d} x ;
+$$
+
+(3) 若 $f(x)$ 是 $E$ 上的可测函数, $g \in L(E)$, 且 $|f(x)| \leq g(x)$, 則 $f \in L(E)$, 此外还有
+$$
+\left|\int_E f(x) \mathrm{d} x\right| \leq \int_E g(x) \mathrm{d} x ;
+$$
+
+(4) 若 $f, g \in L(E), f(x) \leq g(x)$, 则
+$$
+\int_E f(x) \mathrm{d} x \leq \int_E g(x) \mathrm{d} x ;
+$$
+
+(5) 若 $m(E)<\infty$, 则 $E$ 上任意有界可测函数是可积的.
+
+
+
+\begin{theorem}[3.1.9~积分的线性性质]
+设 $f, g \in L(E), \alpha \in \mathbb{R}$, 则 $\alpha f \in$ $L(E), f+g \in L(E)$, 并且
+$$
+\begin{gathered}
+\int_E \alpha f(x) \mathrm{d} x=\alpha \int_E f(x) \mathrm{d} x \\
+\int_E(f(x)+g(x)) \mathrm{d} x=\int_E f(x) \mathrm{d} x+\int_E g(x) \mathrm{d} x
+\end{gathered}
+$$
+\end{theorem}
+
+\begin{theorem}[3.1.10]
+设 $f(x)$ 是 $E$ 上有界可测函数 $|f(x)|<M(x \in$ $M), m(E)<\infty$. 作 $[-M, M]$ 的划分:
+$$
+-M=\alpha_0<\alpha_1<\cdots<\alpha_k=M, \quad \delta=\max _{1 \leq j \leq k}\left(\alpha_j-\alpha_{j-1}\right) .
+$$
+
+记 $\quad E_j=E\left(\alpha_{j-1} \leq f<\alpha_j\right), \quad j=1,2, \cdots, k$.
+则对于任意 $\xi_j \in\left[\alpha_{j-1}, \alpha_j\right], j=1,2, \cdots, k$, 极限
+$$
+\lim _{\delta \rightarrow 0} \sum_{j=1}^k \xi_j m\left(E_j\right)
+$$
+
+存在. 此时
+$$
+\lim _{\delta \rightarrow 0} \sum_{j=1}^k \xi_j m\left(E_j\right)=\int_E f(x) \mathrm{d} x .
+$$
+\end{theorem}
+
+\begin{theorem}[3.1.11~积分的绝对连续性]
+设 $f(x) \in L(E)$, 则对于任给 $\varepsilon>0$, 必存在 $\delta>0$, 使得当 $E$ 中子集 $A$, 只要 $m(A)<\delta$ 时, 就有
+$$
+\left|\int_A f(x) \mathrm{d} x\right| \leq \int_A|f(x)| \mathrm{d} x<\varepsilon .
+$$
+\end{theorem}
+
+
+\begin{theorem}[3.1.12~积分的平移不变性]
+设 $f(x) \in L\left(\mathbb{R}^n\right)$, 则对任意 $y \in \mathbb{R}^n, f(x+y) \in L\left(\mathbb{R}^n\right)$, 而且
+$\int_{\mathbb{R}^n} f(x+y) \mathrm{d} x=\int_{\mathbb{R}^n} f(x) \mathrm{d} x$.
+\end{theorem}
+
+
+
+
+
+
+
+
+\section{第二节~Lebesgue 积分的极限定理}
+
+\begin{theorem}
+定理 3.2.1 (Lebesgue 基本定理) 设 $\left\{f_n(x)\right\}$ 是可测集 $E$ 上的非负可测函数列, $f(x)=\sum_{n=1}^{\infty} f_n(x)$, 则
+$$
+\int_E f(x) \mathrm{d} x=\sum_{n=1}^{\infty} \int_E f_n(x) \mathrm{d} x .
+$$
+\end{theorem}
+
+\begin{theorem}[3.2.3~Fatou引理]
+若 $\left\{f_n(x)\right\}$ 是可测集 $E$ 上非负可测函数列, 则
+$$
+\int_E \varliminf_{n \rightarrow \infty} f_n(x) \mathrm{d} x \leq \varliminf_{n \rightarrow \infty} \int_E f_n(x) \mathrm{d} x \text {. }
+$$
+\end{theorem}
+
+\begin{theorem}[3.2.4~控制收敛定理DCT]
+给定可测集 $E$. 设 $\left\{f_n(x)\right\} \subset \mathfrak{M}(E)$,且有
+$$
+\lim _{n \rightarrow \infty} f_n(x)=f(x), \quad \text { a.e. }[E] .
+$$
+
+若存在函数 $F(x) \in L(E)$, 使得对于 $\forall n \in \mathbb{N}$, 有
+$$
+\left|f_n(x)\right| \leq F(x), \quad \text { a.e. }[E],
+$$
+
+则 $f_n(x) \in L(E), n=1,2, \cdots, f(x) \in L(E)$, 且
+$$
+\lim _{n \rightarrow \infty} \int_E f_n(x) \mathrm{d} x=\int_E f(x) \mathrm{d} x .
+$$
+
+函数 $F(x)$ 称为函数列 $\left\{f_n(x)\right\}$ 的控制函数.
+\end{theorem}
+
+\begin{theorem}[3.2.7~逐项积分]
+设 $E$ 是可测集, $f_n(x) \in L(E), \forall n \in \mathbb{N}$.若
+$$
+\sum_{n=1}^{\infty} \int_E\left|f_n(x)\right| \mathrm{d} x<\infty
+$$
+
+则级数 $\sum_{n=1}^{\infty} f_n(x)$ 在 $E$ 上几乎处处收敛; 记其和函数为 $f(x)$, 则 $f(x) \in$ $L(E)$, 且有
+$$
+\sum_{n=1}^{\infty} \int_E f_n(x) \mathrm{d} x=\int_E f(x) \mathrm{d} x
+$$
+\end{theorem}
+
+
+
+
+如同在微积分学中一样, 交换积分运算与极限运算次序的收玫定理是研究参变积分的有力工具. 考虑一种较简单情况. 设 $E \subset \mathbb{R}^n$ 是可测集, $f(x, y)$ 是定义于集合 $E \times[a, b]$ 上的实函数. 对于每个 $y \in[a, b]$,函数 $f(\cdot, y) \in L(E)$. 于是
+$$
+\varphi(y)=\int_E f(x, y) \mathrm{d} x
+$$
+
+是定义于区间 $[a, b]$ 上的有限实值函数, 称为区间 $[a, b]$ 上的参变积分.
+定理 3.2.8 对于形如 (3.2.9) 式的参变积分 $\varphi(y)$, 如下结论成立:
+
+\begin{theorem}[3.2.8~参变量积分]
+(1) 若存在 $F(x) \in L(E)$, 使得 $|f(x, y)| \leq F(x), \forall x \in E, y \in[a, b]$,则若
+$$
+\lim _{y \rightarrow y_0} f(x, y), \text{在 E 上几乎处处存在}
+$$
+
+就有
+$$
+\lim _{y \rightarrow y_0} \varphi(y)=\int_E \lim _{y \rightarrow y_0} f(x, y) \mathrm{d} x .
+$$
+
+(2) 若存在 $F(x) \in L(E)$, 使得 $|f(x, y)| \leq F(x), \forall x \in E, y \in[a, b]$.若对于几乎所有的 $x \in E$, 函数 $f(x, y)$ 在 $y_0 \in[a, b]$ 处连续, 则 $\varphi(y)$在点 $y_0$ 处连续.
+
+(3) 若函数 $f(x, y)$ 的偏导数 $f_y^{\prime}(x, y)$ 存在, 且存在 $F(x) \in L(E)$,使得 $\left|f_y^{\prime}(x, y)\right| \leq F(x), \forall x \in E, y \in[a, b]$, 则
+$$
+\varphi^{\prime}(y)=\int_E f_y^{\prime}(x, y) \mathrm{d} x .
+$$
+\end{theorem}
+
+
+\section{第三节~重积分和累次积分}
+
+\begin{theorem}[3.3.6~Fubini定理]
+若 $f \in L\left(\mathbb{R}^n\right), \mathbb{R}^n=\mathbb{R}^p \times \mathbb{R}^q$, 则
+
+(1) 对于几乎处处的 $x \in \mathbb{R}^p, f(x, \cdot)$ 是 $\mathbb{R}^q$ 上的可积函数;
+
+(2) $F_f(x)=\int_{\mathbb{R}^q} f(x, y) \mathrm{d} y$ 在 $\mathbb{R}^p$ 上几乎处处有定义，是 $\mathbb{R}^p$ 上的可积函数;
+
+(3) 重积分与累次积分相等:
+$$
+\begin{aligned}
+\int_{\mathbb{R}^n} f(x, y) \mathrm{d} x \mathrm{~d} y & =\int_{\mathbb{R}^p} \mathrm{~d} x \int_{\mathbb{R}^q} f(x, y) \mathrm{d} y \\
+& =\int_{\mathbb{R}^q} \mathrm{~d} x \int_{\mathbb{R}^p} f(x, y) \mathrm{d} y .
+\end{aligned}
+$$
+\end{theorem}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\chapter{第四章~$L^p$空间}
+
+\section{第一节~$L^p$空间}
+
+不加特别说明，默认p的取值为闭区间 $[1, \infty]$
+
+\begin{theorem}[4.1.2(Hölder 不等式)]
+设 $E$ 是 $n$ 维可测集, $p$ 与 $q$ 是共轭指数, $f \in L^p(E), g \in L^q(E)$, 则有
+$$
+\|f g\|_1 \leq\|f\|_p\|g\|_q .
+$$
+\end{theorem}
+
+\begin{theorem}[4.1.3]
+Let $m(A)<\infty$ 
+
+(1) $L^{\infty} \subset L^p \subset L^q$ if $1 \leq q<p<\infty \quad$ （直观上， $L^{\infty}$ 要求函数几乎处处有界，而 $L^p$ 只是要求积分有界。）
+
+(2) $\lim_{p \uparrow \infty}\|f\|_p=\|f\|_{\infty},~~ \text{where} ~~ f \in L^p, \forall p \geqslant 1 \quad$ (注意: $f \in L^p, \forall_p \geqslant 1 \Rightarrow f \in L^{\infty}$ ）
+\end{theorem}
+
+\begin{theorem}
+For $f \in L^p(A)$
+$\|f\|_p=\sup \left\{\int_A f h:\|h\|_p{ }^*=1\right\} . \quad(p=\infty$ 也成立 $)$.
+\end{theorem}
+
+\begin{theorem}[Minkorski~ineq] 
+$f,g \in L^p$
+$$
+\|f+g\|_p \leqslant\|f\|_p+\|g\|_p
+$$
+\end{theorem}
+
+
+\begin{definition}[4.1.8~强收敛]
+Let $f, f_n \in L^p$ s.t. $\left\|f_n-f\right\|_p \rightarrow 0$ as $n \rightarrow \infty$
+
+Then we say " $f_n$ converges to $f$ in $L^p$ " or " $f_n$ converges to $f$ strongly";
+\end{definition}
+
+\begin{theorem}[4.1.9]
+$p \in\left[1, \infty\left[, \quad f_n \rightarrow f\right.\right.$ in $L^p \Rightarrow f_n \xrightarrow{m} f$
+\end{theorem}
+
+\begin{theorem}[4.1.9的推论]
+$p \in\left[1, \infty\left[, \quad f_n \rightarrow f\right.\right.$ strongly $\Rightarrow \exists n_k \uparrow \infty$. s.t. $f_{n_k} \rightarrow f$ a.e.
+\end{theorem}
+
+
+\begin{theorem}[4.1.10( $L^p$ 控制收敛定理 ) ]
+设 $E \subset \mathfrak{M}_n, f, f_m \in \mathfrak{M}(E), m=$ $1,2, \cdots$, 而且 $f_m \rightarrow f$, a.e. $[E]$ 或 $\left\{f_m\right\}$ 依测度收敛到 $f$. 若
+$$
+g \in L^p(E), \quad 1 \leq p<\infty,
+$$
+
+使得 $\left|f_m(x)\right| \leq g(x)$, a.e. $[E], m=1,2, \cdots$, 则 $f_m \xrightarrow{L^p} f$.
+\end{theorem}
+
+
+\begin{definition}[支集]
+如果 $f: \mathbb{R}^d \supset A \rightarrow \mathbb{R}$，那么 $f$ 的支集 $\operatorname{supp}~f$ 定义为:
+$$
+\operatorname{supp}~f=\overline{\{x \in A: f(x) \neq 0\}}
+$$
+取闭包意味着它包括所有 $f$ 取非零值的点以及这些点的极限点。
+\end{definition}
+
+\begin{definition}[4.1.14~稠密和可分] 
+设 $E \subset \mathbb{R}^n$ 是可测集, $\mathcal{F} \subset L^p(E)$. 若对任意的 $f \in L^p(E)$ 以及 $\varepsilon>0$, 总存在 $g \in \mathcal{F}$, 使得 $\|f-g\|_p<\varepsilon$, 则称函数类 $\mathcal{F}$在 $L^p(E)$ 中稠密，也可称每个元素 $f \in L^p(E)$ 可用 $\mathcal{F}$ 中的函数 “ $L^p$逼近”. 若 $L^p(E)$ 中存在可数稠密子集, 则称 $L^p(E)$ 是可分的.
+\end{definition}
+
+\begin{theorem}[4.1.16]
+$1\leq p < \infty$，设 $E \subset \mathbb{R}^n$ 是可测集, 则每个 $f \in L^p(E)$, 可用 $C_c\left(\mathbb{R}^n\right)$ 中的函数在 $E$ 上 $L^p$ 逼近。即$C_c\left(\mathbb{R}^n\right)$ 在$L^p(E)$ 中稠密。
+\end{theorem}
+
+
+\section{第三节~卷积}
+
+\begin{definition}[卷积] 
+$$
+(f * g)(x)=\int_{\mathbb{R}^d} f(y) g(x-y) d y, \quad x \in \mathbb{R}^d
+$$
+is called the "convolution" of $f$ and $g$
+
+若f,g的定义域不是全空间，则通过如方式定义其卷积:
+
+$f: A \rightarrow \mathbb{R}$ : define $\tilde{f}=f \cdot \chi_A \quad(\tilde{f}$ 的定义域是全空间)
+
+$g: B \rightarrow \mathbb{R}: \quad \tilde{g}=g \cdot \chi_B $
+
+$(f * g)(x):=\tilde{f} * \tilde{g}(x)$
+\end{definition}
+
+\begin{theorem}
+$ \operatorname{supp} f * g \subset \overline{\operatorname{supp} f+\operatorname{supp} g} $
+\end{theorem}
+
+
+\begin{theorem}[4.3.1(杨 (Young) 氏不等式)]
+若 $f \in L^p\left(\mathbb{R}^n\right)(1 \leq p \leq$ $\infty), g \in L^1\left(\mathbb{R}^n\right)$, 则 $f * g \in L^p\left(\mathbb{R}^n\right)$, 且
+$$
+\|f * g\|_p \leq\|f\|_p\|g\|_1 .
+$$
+\end{theorem}
+
+\begin{definition}[4.3.5~磨光子]
+$\phi \in C\left(\mathbb{R}^d\right)$ is called a mollifier if
+
+(i) $\phi \geqslant 0$
+
+(ii) $\phi \in C_c^{\infty}\left(\mathbb{R}^d\right)$
+
+(iii) $\|\phi\|_1=1$
+\end{definition}
+
+注: (1) 支集天然是闭的, 因此支集是紧的等价于支集有界；(2) 磨光子求导后还是紧支集的
+
+具体而言，磨光子取以下函数：
+$$
+\begin{aligned}
+& f(x)=\chi_{B_1(0)} \cdot \exp \left\{\frac{1}{\|x\|^2-1}\right] \quad x \in \mathbb{R}^d . \\
+& \phi:=f /\|f\|_1: \quad \text { mollifier } \\
+& \phi_{\varepsilon}(x)=\varepsilon^{-d} \phi\left(\frac{x}{\varepsilon}\right), \quad x \in \mathbb{R}^d . \quad(\varepsilon>0) \\
+&
+\end{aligned}
+$$
+
+\begin{theorem}[4.3.6]
+$p \in\left[1, \infty\left[. \quad f \in L^P(A)\right.\right.$, A open 
+
+(i) $\phi_{\varepsilon}$ : mollifier
+
+(ii) $f_{\varepsilon}:=\phi_{\varepsilon} * f$
+
+Then
+
+(1) $f_{\varepsilon} \in C^{\infty}\left(\mathbb{R}^d\right)$ 不一定有紧支集，但无穷光滑、
+
+(2) $\quad \lim _{\varepsilon \rightarrow 0^{+}}\left\|f_{\varepsilon}-f\right\|_p=0$.
+\end{theorem}
+
+该定理体现了为什么叫磨光子
+
+
+\begin{theorem}[4.3.6的推论]
+每个函数 $f \in L^p(\mathbb{R})$ 可用无穷可微函数按 $L^p$ 范数逼近.换句话说，$C_c^\infty(\mathbb{R})$是 $L^p(\mathbb{R})$ 的稠密子空间.
+\end{theorem}
+
+由于在$L^p$ 空间谈一点的取值没有意义，因此需要修改对支集的定义。
+
+\begin{definition}[本质支集]
+Let $f \in L^p(A)$
+
+$$
+\begin{aligned}
+\operatorname{ess supp} f: & =\overline{\left\{x \in A: m\left(B_{\varepsilon}(x) \cap\{f \neq 0\}\right)>0, \quad \forall \varepsilon>0\right\}} \\
+& =\mathbb{R}^d \backslash \bigcup_{\omega \in Z_f} \omega
+\end{aligned}
+$$
+
+$Z_f=\left\{\omega \subset \mathbb{R}^d\right.$ open: $f=0$ a.e. on $\left.w\right\}$，  $\omega$ 是个集合, 里面是使 $f=0$ 的点.也就是说 $Z_f$ 是一个集合族
+
+$O:=\bigcup_{\omega \in Z_f} \omega$.
+
+\end{definition}
+
+\begin{definition}[弱收敛]
+Given $\quad f, f_n \in L^P(A)$, 
+If $\quad \int_A f_n g \rightarrow \int_A f \cdot g . \quad \forall g \in l^{p^*}$ (对偶空间)
+then $t_n$ is called "converge of weakly".
+written $f_n \xrightarrow{w} f$.
+\end{definition}
+
+
+
+
+
+
+\chapter{第五章~Hilbert空间理论}
+
+\section{第一节~距离空间}
+
+\begin{definition}[5.1.1~距离/度量] 
+Given a nonempty set $X, d(\cdot, \cdot): X \times X \rightarrow \mathbb{R}^{+}$is called a metric/distance if $\forall x, y, z \in X$ :
+\begin{itemize}
+  \item Positivity
+  $$
+  d(x, y) \geq 0 \quad \text { and } d(x, y)=0 \text { iff } x=y ;
+  $$
+  \item Symmetry
+  $$
+  d(x, y)=d(y, x)
+  $$
+  \item Triangle inequality
+  $$
+  d(x, z) \leq d(x, y)+d(y, z) .
+  $$
+\end{itemize}
+$(X, d)$ is called a metric (distance) space.
+\end{definition}
+
+
+\begin{definition}[5.1.3~柯西列] 
+Let $(X, d)$ be a metric space. $\left(a_n\right) \subset X$ is called a Cauchy sequence if $\forall \epsilon>0, \exists N=N(\epsilon)$ s.t. if $m>n>N$, then
+$$
+d\left(x_m, x_n\right)<\epsilon
+$$
+\end{definition}
+
+\begin{definition}[5.1.4~完备的] 
+A metric space $(X, d)$ is called complete if any Cauchy sequence $\left(a_n\right) \subset X$ has a limit.
+\end{definition}
+
+
+\begin{theorem}
+Let $(X, d)$ be a complete metric space. Then $\left(a_n\right) \subset X$ is Cauchy iff $\lim a_n$ exists.
+\end{theorem}
+
+
+\begin{theorem}
+$\left(C[0,1]^d\right)$ is complete under the metric $\|\cdot\|_{\infty}$.
+\end{theorem}
+
+
+
+\section{第二节~Hilbert空间理论}
+
+由于 $L^2$ 空间也是一个内积空间，因此我们先从一般的内积空间出发，推导在内积空间中成立的定理，而将 $L^2$ 空间作为一个特例。从而将教材 4.2 节的内容并入5.2节。
+
+\begin{definition}[5.2.1~内积] 
+设 $X$ 是复数域 $\mathbb{C}$ 上的线性空间， $X$ 上的一个二元函数 $(\cdot,\cdot): X \times X \rightarrow \mathbb{K}$ 称为是一个内积, 如果:
+\begin{itemize}
+  \item 正定性
+  $$
+  (x, x) \geq 0 \quad \text { and } (x, x)=0 \text { iff } x=0 ;
+  $$
+  \item 共轭对称性
+  $$
+  (x, y)=\overline{(y, x)}
+  $$
+  \item 共轭线性性
+  $$
+  (\alpha x + \beta y, z) = \alpha(x,z) + \beta(y,z)
+  $$
+\end{itemize}
+
+对所有 $x, y, z \in X, \alpha, \beta \in \mathbb{C}$ 成立, $(X, (\cdot,\cdot))$ 称为内积空间.
+\end{definition}
+
+\begin{theorem}[推论5.2.3]
+在内积空间 $(X,(\cdot, \cdot))$ 上令
+$$
+\|x\|=(x, x)^{1 / 2},
+$$
+
+称其为由内积诱导的范数（其实就是L2范数）。可以验证该范数可以作为一个度量，因此一个内积空间必是度量空间。
+\end{theorem}
+
+
+\begin{definition}[5.2.4~Hilbert空间] 
+一个完备的内积空间称为Hilbert空间。（完备：柯西列有极限。）
+\end{definition}
+
+
+\begin{definition}[5.2.6~正交] 
+$H$ 是 Hilbert 空间, $x, y \in H$. 
+\begin{itemize}
+    \item[(1)] 若 $(x, y)=0$, 就称 $x$ 与 $y$ 正交, 记作 $x \perp y$. 
+    \item[(2)] 又设 $A, B$ 是 $H$ 的非空子集, 若 $\forall x \in A$ 和 $y \in B$均有 $x \perp y$, 称 $A$ 与 $B$ 正交, 记作 $A \perp B$. 
+    \item[(3)] 此外集合 $\{x \in H \mid x \perp A\}$称为 $A$ 的正交补, 记作 $A^{\perp}$.
+\end{itemize}
+\end{definition}
+
+
+
+\begin{definition}[5.2.8~正交集] 
+
+\end{definition}
+
+\begin{definition}[傅里叶系数]
+$ \hat{v}(\lambda) = (v,u_{\lambda}) $ is called the Fourier coefficient of $v$ corresponding to $(u_{\lambda})_{\lambda \in \Lambda}$.
+\end{definition}
+
+
+\begin{theorem}[勾股定理]
+Let $\left(u_j\right)_{1}^{N} \subset V$ : orthonormal set. ~ $v \in V$. ~ Then 
+$$
+\|v\|^2=\sum\limits_1^N |\hat{v}(j)|^2 + \left\|v-\sum\limits_1^N \hat{v}(j) u_j\right\|^2
+$$
+\end{theorem}
+
+
+
+\begin{theorem}[5.2.11~Bessel~inequality]
+$$
+\sum\limits_1^N |\hat{v}(j)|^2 \leq \|v\|^2
+$$
+\end{theorem}
+
+\begin{theorem}[5.2.2~Cauchy~Schwarz~inequality] 
+V: inner product space $u, v \in V$
+$$
+|(u, v)| \leqslant\|u\| \cdot\|v\|
+$$, 
+where $\|u\|=(u, u)^{\frac{1}{2}}$
+\end{theorem}
+
+\begin{theorem} \
+
+(1) 一个内积空间是一个赋范空间（可以由内积诱导范数）
+
+(2) 由(1)易得，一个Hilbert空间是一个Banach空间
+\end{theorem}
+
+\begin{definition}[5.2.12~标准正交基] 
+$\mathscr{E} := \left(e_\lambda\right) \lambda \in \Lambda$ is called an "orthonormal basis (ONB) of a Hilbert space $H$ if
+\begin{itemize}
+  \item $\mathscr{E}$ is an orthonormal set ：保证了 $e_\lambda$ 和$e_{\lambda^{\prime}}$ 线性无关
+  \item The closure of $\{$ (finite) linear combination of $\mathscr{E}\}=H$. \\
+    I.e. $\exists h_n $, $ h_n $ is linear combination of $\mathscr{E}$. ~ s.t. $h_n \rightarrow h$ in $H$. $\left(\| h_n-h \| \rightarrow 0\right)$.
+\end{itemize}
+\end{definition}
+
+线性组合一定是有限个。比如 $\sum_{\lambda \in \Lambda} c_\lambda e_\lambda$ 当 $\Lambda$ 是不可数集时就不是线性组合,对于一个无穷维空间, 由于其基底的数量是无穷的, 因此线性组合是指从这些基底中挑出有限个
+$$
+e_{\lambda_1}, e_{\lambda_2}, \cdots, e_{\lambda_N}, \quad \sum_i c_j e_{\lambda_j}
+$$
+
+
+\begin{proposition}[5.2.10]
+默认任何一个 Hilbert 空间都有基底。（证明可由Zorn引理）
+\end{proposition}
+
+\begin{definition}[5.1.11]
+一个距离空间若有可数稠密子集，就称为是可分的.
+\end{definition}
+
+\begin{theorem}
+(1) $1 \leqslant p<\infty$,  $L^p(A)$ is separable
+(2) $L^\infty(A)$ is not separable
+\end{theorem}
+
+\begin{theorem}[4.2.7]
+$ \mathscr{E}=\left(e_\lambda\right)_{x \in \Lambda}$ is an orthonormal set in $L^2(A)$ $\Rightarrow \mathscr{E}$ is countable
+\end{theorem}
+
+\begin{definition} \
+
+(i) $x \perp S$ means $x \perp s, \forall s \in S$
+
+(ii) $S^{\perp}:=\{x: x \perp S\}$ （正交补）
+\end{definition}
+
+\begin{theorem}[5.2.13]
+Let $\mathscr{E}=\left(e_\lambda\right)_{\lambda \in \Lambda}$ be an "orthonormal set (ONS)" of a Hilbert space $H$. Then the following are equivalent:
+\begin{itemize}
+  \item $\mathscr{E}$ is an $O N B$
+  \item $h \in H, h \perp \mathscr{E} \Rightarrow h=0$. ~ 即 $\mathscr{E}$ 是完备的.
+  \item $\forall h \in H, ~ \exists\left(e_n\right)_1^\infty \subset \mathscr{E}$ s.t. ~ $h=\sum_{n=1}^{\infty} \hat{h}(n) e_n ~ \& ~ \|h\|^2=\sum_{n=1}^{\infty}|\hat{h}(n)|^2$ (Parseval identity)
+\end{itemize}
+\end{theorem}
+
+\begin{corollary}[5.2.13在$L^2$空间中的应用]
+Let $\varepsilon=\left(e_n\right)_{n=1}^{\infty}$ be an ONS of $L^2(A)$. Then $\varepsilon$ is an $O N B$ iff $\|f\|^2=\sum_{n=1}^{\infty}|\hat{f}(n)|^2, \quad \forall f \in L^2(A)$. 这里的范数是 $L^2$ 范数，只有它可以省略下标。
+\end{corollary}
+
+\begin{definition}[周期]
+记 $\mathbb{T}=\mathbb{R} / \mathbb{Z}$, $ f \in L^2(\mathbb{T})$ 表示  $L^2$  可积，周期为 1 的函数 . $\mathbb{T}$ 可以理解为 $[0,1]$ 或 $[-\frac{1}{2},\frac{1}{2}]$
+\end{definition}
+
+例：$\mathcal{E}=\left(e^{i 2 \pi n \theta}\right)_{n \in \mathbb{Z}}$ is an ONB of $L^2(\mathbb{I})$ I.e. $\quad\|f\|^2=\sum_{n \in \mathbb{Z}}|\hat{f}(n)|^2 \quad f \in L^2(\mathbb{T})$.
+
+\begin{theorem}
+If $M$ is a subspace of a Hilbert space $H$, then $\overline{M}$ is a subspace.（注：本笔记中的subspace指线性子空间）
+\end{theorem}
+
+\begin{theorem}[5.2.15~正交分解] 
+Let $M$ is a closed subspace of $H$. Then
+
+$$
+H=M \oplus M^{\perp} \quad \text{直和}
+$$
+
+I.e. $\forall h \in H, \exists!u \in M, \exists!v \in M^{\perp}$, s.t. $h=u+v$
+\end{theorem}
+
+注：Hilbert space 的线性子空间是闭的 $\Leftrightarrow$ 该线性子空间是有限推的. (可自行证明) 。也就是说Hilbert space 的线性子空间未必是闭的，因此有必要强调$M$ 是 $H$ 的闭线性子空间。
+
+
+下面正式进入泛函分析。
+
+\begin{definition}[线性泛函] \
+
+\begin{itemize}
+  \item $L$ is called a linear functional of $H$ if
+        $$
+        L(\alpha u+\beta v)=\alpha L(u)+\beta L(v) \quad u, v \in H \quad \alpha, \beta \in \mathbb{C}
+        $$
+  \item $L$ is called "continuous at $u_0 \in H$ " if $u_n \rightarrow u_0 ~ \text{in} ~ H \Rightarrow L\left(u_n\right) \rightarrow L\left(u_0\right)$.
+  \item $L$ is called "continuous" if $L$ is continuous at each $u \in H$
+  \item $H^*=\{L: L$ is a continuous linear functional on $H\}$
+\end{itemize}
+
+\end{definition}
+
+\begin{theorem}
+$H^*$ is a vector space
+$$
+\begin{aligned}
+& L, L^{\prime} \in H^*, \quad c \in \mathbb{C} \\
+& \left(L+L^{\prime}\right)(u) \quad:=L(u)+L^{\prime}(u), \quad u \in H \\
+& (c L)(u) \quad:=c L(u)
+\end{aligned}
+$$
+\end{theorem}
+
+\begin{definition}[5.2.17]
+设 $f$ 是 Hilbert 空间上的线性泛函. 若存在常数 $c>0$, 使得 $\forall x \in H$, 有
+$$
+|f(x)| \leq c\|x\|
+$$
+
+称 $f$ 是 $H$ 上的有界线性泛函. 当 $f$ 是有界线性泛函时, 令
+$$
+\|f\|=\sup \{|f(x)| \mid\|x\| \leq 1\}
+$$
+
+称 $\|f\|$ 为 $f$ 的模.
+\end{definition}
+
+\begin{theorem}
+$L$ is a linear functional on $H$, then the following are equivalent:
+\begin{itemize}
+  \item $L$ is continuous at 0
+  \item $L$ is continuous
+  \item $L$ is bounded
+\end{itemize}
+
+\end{theorem}
+
+\begin{theorem}[5.2.18]
+若 $f$ 是 $H$ 上有界线性泛函, 则
+$$
+\begin{aligned}
+\|f\| & =\sup \{|f(x)| \mid\|x\|=1\} \\
+& =\sup \{|f(x)| /\|x\| \mid x \in H, x \neq 0\} \\
+& =\inf \{c>0|| f(x) \mid \leq c\|x\|, x \in H\} .
+\end{aligned}
+$$
+\end{theorem}
+
+\begin{theorem}[5.2.19~Riesz 表示定理]
+设 $f$ 是 Hilbert 空间 $H$ 上的有界线性泛函, 则存在唯一的 $x_f \in H$, 使得对任意的 $x \in H$; 有
+$$
+f(x)=\left(x, x_f\right),
+$$
+
+而且 $\|f\|=\left\|x_f\right\|$. 于是由 $f$ 到 $x_f$ 给出了 $H^*$ 到 $H$ 的一个等距同构.
+\end{theorem}
+
+\begin{definition}[弱收敛] 
+$ u, u_n \in H$, $u_n \xrightarrow{w} u$ in $H$ ~if ~$\forall h, \left(h, u_n\right) \longrightarrow(h, u) ,\quad n \rightarrow \infty$
+\end{definition}
+
+\begin{theorem}[Banach-Alaoglu]
+   $\left(u_n\right)$ is bdd in $H \Rightarrow \exists u \in H \quad \& \quad\left(n_k\right)$ s.t. $u_{n_k} \xrightarrow{w} u$.
+   
+   即 $H$ 中的有界无穷序列必有弱收敛子列。是 Bolzano-Weierstrass Thm 的推广(B-W是在 $\mathbb{R}^n$ 中成立)
+\end{theorem}
+
+
+\begin{theorem}[Gram - Schmidt ~ procedure]
+
+线性无关不意味着互相垂直，而 Schmidt 正交化就是利用这些线性无关的向量去造一个正规正交集（互相垂直)
+
+$\left(u_n\right)$ be linearly independent in H, we can obtain an ONS $\left(e_n\right)_1^N$ via $G-S$
+
+操作过程: 
+$$
+\begin{aligned}
+& e_1=u_1 /\left\|u_1\right\| \\
+& v_2=u_2-\left(u_2, e_1\right) e_1,\quad \text{$\left(u_2, e_1\right) e_1$就是 $u_2$ 在 $e_1$ 上的投影}, \quad e_2=v_2 /\left\|v_2\right\| \\
+& v_3=u_3-\left(u_3, e_1\right) e_1-\left(u_3, e_2\right) e_2, \quad e_3=v_3 /\left\|v_3\right\|  \\
+& \left(e_j, e_k\right)=\delta_{j, k}
+\end{aligned}
+$$
+\end{theorem}
+
+
+\begin{definition}[傅里叶变换]
+(i) For $f \in L^{1}\left(\mathbb{R}^d\right)$ 
+$$
+\hat{f}(\xi)=\int_{\mathbb{R}^d} f(s) e^{-i 2 \pi \xi \cdot s} d s . \quad \xi \in \mathbb{R}^d
+$$
+is called the Fourier transform. 内积 $\xi \cdot S=\sum_1^d \xi_j S_j$
+(ii) For $f \in L^1\left(\mathbb{R}^d\right)$.
+$$
+f^v(x):=\int_{\mathbb{R}^d} f(\xi) e^{i 2 \pi \xi \cdot x} d \xi, \quad x \in \mathbb{R}^d
+$$
+is called the inverse Fourier transform
+\end{definition}
+
+\begin{definition}[平移]
+Let $f: \mathbb{R}^d \rightarrow \mathbb{R}, \quad h \in \mathbb{R}^d$. Define $T_h f: x \mapsto f(x-h) \quad f$ 的“向右”平移 (translation).
+\end{definition}
+
+\begin{theorem}
+For $f \in L^p\left(\mathbb{R}^d\right), \quad 1 \leqslant p<\infty$. Then $\lim _{h \rightarrow 0}\left\|T_h f-f\right\|_p=0 . \quad-$ （向量 $\rightarrow 0$ 就是说它的模 $\rightarrow 0$.）
+\end{theorem}
+
+$L^\infty$ 是不行的，考虑迪利克雷函数那种情况。
+
+\begin{theorem}[Riemann - Lebesgue ~ lemma]
+$f \in L^{\prime}$ implies
+
+(i) $\|\hat{f}\|_{\infty} \leqslant\|f\|_1$
+
+(ii) $\hat{f}(\infty)=0$. 傅里叶系数随着 $\xi \rightarrow \infty$ 而趋向 0 .
+
+(iii) $\hat{f}$ : uniformly continuous. (在全空间).
+\end{theorem}
+
+
+\begin{theorem}
+$\widehat{f * g}=\hat{f} \cdot \hat{g} \quad$ f, g \text { “nice” }
+\end{theorem}
+
+\begin{definition}[Schwartz函数]
+Schwartz函数就是一类非常nice的函数。
+
+(i) $f \in C^{\infty}\left(\mathbb{R}^d\right)$ is called a Schwartz function if
+$$
+\sup_{x \in \mathbb{R}^d} \left|x^\alpha \partial^\beta f(x)\right|<\infty, \forall \alpha, \beta \in \mathbb{Z}^d_{\geq 0} 
+$$  
+
+即 $\alpha=\left[\begin{array}{l}\alpha_1 \\ \alpha_2 \\ \alpha_d\end{array}\right] \in \mathbb{Z}_{\geq 0}^d \Leftrightarrow \alpha_j \in\{0,1,2, \cdots\}$
+
+$\alpha$ 的模: $|\alpha|=\sum_1^d \alpha_j, \quad x^\alpha=x_1^{\alpha_1} \cdots x_j^{\alpha_d} \quad$ 多元多项式
+
+$\partial^\beta f=\frac{\partial^{|\beta|} t}{\partial x_1^{\beta_1} \ldots \partial x_d^{\beta_\alpha}} \quad \beta$ 阶泿名偏导 $\quad|\beta|=\frac{d}{1} \beta_j$
+
+如果一个函数是Schwartz函数。那对它求任意阶偏导，乘任意所多项式，还还Schwartz
+
+(ii) $S\left(\mathbb{R}^d\right)=\{\text { all Schwartz functions }\} . \quad \text { Schwartz 函数类 }$
+\end{definition}
+
+
+
+\begin{theorem} \
+
+(i) $\widehat{\partial^\alpha f(\xi)} = (2 \pi i)^{|\alpha|} \cdot \xi^{\alpha} \hat{f}(\xi) \quad|\alpha|=\sum_i^d \alpha_j$
+
+(ii) $\partial^\alpha \hat{f}(\xi)=(-2 \pi i)^{|\alpha|} \cdot \widehat{x^\alpha f}(\xi)$ 先 Fourier, 后偏导
+
+iii) $ \in S(\mathbb{R}) \circlearrowleft$ ，自映射，即对 Schwartz function 做傅里叶变换还是 Schuartz function.
+\end{theorem}
+
+\begin{theorem}[Fourier~Inversion~Formula]
+$$
+\hat{f}^v(x)=f(x), \quad f \in S\left(\mathbb{R}^d\right)
+$$
+\end{theorem}
+
+
+\begin{theorem}[Plancherel ~formula]
+$$
+(f, g)=(\hat{f}, \hat{g}), \quad f, g \in S(\mathbb{R}^d)
+$$
+
+In particular, $\|f\|=\|\hat{f}\|$
+\end{theorem}
+
+\begin{theorem}[Plancherel~Thm]
+
+$\exists F: L^2\left(\mathbb{R}^d\right) $, $F$是自映射的,  s.t.
+
+(1) $F$ is linear \& bijective
+
+(2) $F(f)=\hat{f}, f \in S\left(\mathbb{R}^d\right)$. 在 $S\left(\mathbb{R}^d\right)$ 中, F 就是 Fourier transform.但是F也能推广到L2空间中，并保留一些性质。
+
+(3) $F$ is isometric: $\|F(f)\|=\|f\|, f \in L^2$
+\end{theorem}
+
+\begin{proof}
+以下是证明中的一部分，写出了$F$的具体形式
+
+(4) (fn) is Canchy $\Rightarrow\left(\hat{f}_n\right)$ is Cauchy
+$$
+\text{proof:}~\widehat{f-g}=\hat{f}-\hat{g} \Rightarrow\left\|\hat{f}_m-\hat{f}_n\right\|=\left\|\hat{f_m}-f_n\right\|=\left\|f_m-f_n\right\|
+$$
+
+(5) $ \hat{f}_n \in S\left(\mathbb{R}^d\right) \&\left(\hat{f}_n\right)$ Canchy imply
+$$
+F(f):=\lim _{n \rightarrow \infty} \hat{f}_n \quad \text { exists in } L^2 \quad \text { 这就是要找的F }
+$$
+\end{proof}
+
+\begin{theorem}
+利用Plancherel Thm 拓展到 $L^2$ 空间, 以前是在 $S(R^d)$.
+
+For $f, g \in L^2\left(\mathbb{R}^d\right)$
+
+(1) $\widehat{f * g}=\hat{f} \cdot \hat{g}$
+
+(2) $(f \cdot g)^v=f^v * g^v$
+\end{theorem}
+
+
+
+
+
+\chapter{第六章~Banach空间}
+
+\section{第一节~Banach空间}
+
+
+\begin{definition}
+完备的线性赋范空间叫做Banach空间
+\end{definition}
+
+\begin{theorem}[6.1.8]
+线性赋范空间$X$是有穷维的充分必要条件是，X的单位球面是列紧的.
+\end{theorem}
+
+\begin{definition}[Banach空间中的线性算子]
+Let $X,Y$ be normed spaces.
+
+$l: Z \rightarrow Y$ is called a linear operator if
+$$
+\forall x, x^{\prime} \in \&, \alpha, \alpha^{\prime} \in \mathbb{C},~ \text{有} ~ l\left(\alpha x+\alpha^{\prime} x^{\prime}\right)=\alpha l(x)+\alpha^{\prime}\left(\mid x^{\prime}\right)
+$$
+
+当$Y$取复数域$\mathbb{C}$时，这样的线性算子称为线性泛函，即线性泛函是一类特殊的线性算子。
+
+(1) 
+$$
+\|l\|:=\sup \{\|l(x)\|:\|x\| \leqslant 1\} =\sup \{\|l(x)\|:\|x\|=1\}
+$$
+
+注意$\|x\|$是 $X$ 中的范数，因为 $x \in X$, $\|l(x)\|$ 是Y中的范数，因为 $L(x) \in Y$.
+
+闭球体的上确界一定在球面取到。这是由范数的齐次性决定的。比如假没x在球内、连接球心和x交于球面上一点 $x^{\prime}, \quad x^{\prime}=\lambda x \quad|\lambda|>1$
+
+(2) $ l$ is called bdd if $\|\ell\|<\infty$
+
+(3) $l$ is called continuous at $x$ if
+$$
+x_n \rightarrow x \text { in } X \Rightarrow  l\left(x_n\right) \rightarrow l(x) \text { in } Y
+$$
+
+(4) $l$ is called continuous if $l$ is continuous at each $x \in X$
+
+(5) $\mathcal{L}(X, Y)=\{l: l: X \rightarrow Y \text { bdd } \& \text { linear }\} $，有界线性算子的全集
+\end{definition}
+
+\begin{theorem}
+Let $l: X \rightarrow Y$ be linear. Then $l$ is continuous iff $l$ is bdd.
+\end{theorem}
+
+
+\begin{theorem}[6.1.12]
+设 $X$ 是线性赋范空间, $Y$ 是 Banach 空间时, $\mathcal{L}(X, Y)$ 按照上面定义的算子范数 $\|\cdot\|$ 构成一个 Banach 空间.（注意这里并不要求$X$是完备的，也就是说对偶空间一定是一个Banach空间）
+\end{theorem}
+
+\section{第二节~Banach空间上的有界线性算子}
+
+\begin{theorem}[Baire纲定理]
+$(X, d)$ : complete metric space $\Rightarrow (X, d)$ is not meager.（即有内点）
+( $A \subset X$ is meager $\Rightarrow$ int $A=\phi$. 贫集是指可数多个无内点闭集的并.）
+\end{theorem}
+
+\begin{theorem}[Banach-Steinhauss~Thm (也叫一致有界定理或共鸣定理)]
+设 $X, Y$ 是 Banach 空间，
+
+$\left(T_\lambda\right)_{\lambda \in \Lambda} \subset \mathcal{L}(X, Y) \quad$ s.t.
+
+$\sup_{\lambda \in \Lambda}\left\|T_\lambda(x)\right\|=C_{(x)} <\infty \quad \forall x \in X$
+
+Then $\sup_{\lambda \in \Lambda} \left\|T_\lambda\right\|<\infty \quad$ ( $T_\lambda$ 有一致的上界, 比如设为 $M,\left\|T_\lambda\right\| \leq M, \forall T_\lambda$ ).
+\end{theorem}
+
+
+\begin{theorem}[6.2.1~开映射定理OMT]
+设 $X, Y$ 是 Banach 空间, $T \in \mathcal{B}(X, Y)$.若 $T$ 是满射, 即 $T X=Y$, 则 $T$ 是开映射.（把开集映射成开集）
+\end{theorem}
+
+\begin{theorem}[6.2.2~逆映射定理IMT]
+设 $X, Y$ 是 Banach 空间，$T \in \mathcal{L}(X, Y)$ 是双射，则 $T^{-1} \in \mathcal{L}(Y, Z)$. 逆映射存在且连续
+\end{theorem}
+
+
+
+\begin{definition}[Product~space]
+
+(1) $X, Y$ : normed spaces.
+$$
+\begin{aligned}
+& Z \times Y: \quad\{(x, y): x \in Z, y \in Y\} \\
+& \alpha(x, y)+\beta\left(x^{\prime}, y^{\prime}\right)=\left( \alpha x+\beta x^{\prime}, \alpha y+\beta y^{\prime}\right) . \\
+& \|(x, y)\|:=\|x\|_X+\|y\|_Y .
+\end{aligned}
+$$
+
+(2) 令T是定义在 $D\subset X$ 上到 $Y$ 的线性算子，其中$D$是线性子空间
+$$
+G(T):=D \times T(D) \subset Z \times Y
+$$
+is called the graph of $T$.
+\end{definition}
+
+\begin{theorem}[6.2.6~闭图像定理CGT] 
+设 $X$ 和 $Y$ 是 Banach 空间, $T$ 是 $\mathcal{D}(T) \subset X$ 到 $Y$ 的线性算子, $\mathcal{D}(T)$ 是 $X$ 中的闭线性子空间. 若 $G_T$ 是 $X \times Y$中闭集, 则 $T$ 是连续的.
+\end{theorem}
+
+\section{第三节~Banach空间上的连续线性泛函}
+
+\begin{definition}[对偶空间]
+Let $X$ be a (complex) normed space. $X^*:=\mathcal{L}(X, \mathbb{C})$ is called the dual space of $X$. 即 $X$ 到 $\mathbb{C}$ 的有界线性泛函组成的空间
+
+Remark: Clearly, each $f \in X^*$ is a bounded (complex) linear functional.
+\end{definition}
+
+\begin{theorem}
+$X$: (complex) normed space （注: 不特别说明，默认是复的）
+
+(i). $f \in X^*, ~ u:=\operatorname{Re} f$ imply
+$$
+f(x)=u(x)-i u(i x), \quad x \in Z 
+$$
+
+(ii) $ u: X \rightarrow \mathbb{R}$ bounded real linear functional 
+$\Rightarrow$  $f$ defined above is a linear functional on $X$. $f$ 是复的
+
+(iii) In (i) \& (ii), we both have $\|f\|=\|u\|$. "保范"
+\end{theorem}
+
+\begin{theorem}[6.3.2~Hahn-Banach扩张定理]
+设 $X$ 是复线性赋范空间, $D$ 是 $X$ 的线性子空间.若 $f$ 是 $D$ 上的有界线性泛函, 那么 $f$ 可以延拓到整个空间 $X$ 上且保持范数不变. 就是说, $X$ 上存在有界线性泛函 $F$ 满足
+
+(1) $F(x)=f(x), \quad \forall x \in D$ (延拓条件)
+
+(2) $\|F\|=\left\|f\right\|$ (保范条件)
+\end{theorem}
+
+以下均为Hahn-Banach扩张定理的推论：
+\begin{theorem}[6.3.3]
+设 $X$ 是线性赋范空间, 对于任意的非零 $x_0 \in X$, 必存在 $f \in X^*$, 满足
+$$
+\|f\|=1, \quad f\left(x_0\right)=\left\|x_0\right\| .
+$$
+\end{theorem}
+
+\begin{theorem}[6.3.5]
+设 $X$ 是线性赋范空间, $x \in X$, 则
+$$
+\|x\|=\sup \left\{|f(x)| \mid f \in X^*,\|f\| \leq 1\right\} \text {, }
+$$
+且上确界能达到.
+\end{theorem}
+
+\begin{definition}[Banach空间中的弱收敛]
+$x_n \xrightarrow{w} x$ means $\forall f \in X^*, f\left(x_n\right) \rightarrow f(x)$
+\end{definition}
+
+
+
+
+
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
