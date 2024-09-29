@@ -1,0 +1,46 @@
+# Ignore compiled object files  
+*.o  
+
+# Ignore compiled dynamic libraries  
+*.so  
+*.dylib  
+*.dll  
+
+# Ignore static libraries  
+*.a  
+*.lib  
+
+# Ignore data files  
+*.csv  
+*.npy  
+*.parquet  
+*.pkl
+data/
+
+# Ignore media files
+*.mp4
+*.m4a
+
+# Ignore temporary files  
+*.tmp  
+*.temp  
+*.swp  
+.DS_Store  
+
+# Ignore Python bytecode  
+__pycache__/  
+*.py[cod]  
+
+# Ignore backup files  
+*~  
+
+# Ignore logs and temporary databases  
+*.log  
+*.sqlite  
+
+# Ignore virtual environments (Python)  
+venv/  
+env/  
+
+# Ignore node_modules (JavaScript/Node.js)  
+node_modules/
