@@ -328,7 +328,7 @@ This theorem will be proved in Appendix below. We now continue the construction 
 
 
 
-补充：Lipschitz连续
+#### 补充：Lipschitz连续
 
 1. **定义**：
    - 一个函数 \(f: [a, b] \to \mathbb{R}\) 被称为Lipschitz连续的，如果存在一个常数 \(L \geq 0\)，使得对于所有 \(x, y \in [a, b]\)，都有：

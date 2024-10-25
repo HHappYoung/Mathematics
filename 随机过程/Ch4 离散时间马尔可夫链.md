@@ -1,0 +1,1 @@
+**Ergodic**: Positive recurrent, aperiodic states are called ergodic.

@@ -80,7 +80,9 @@ $$
 
 
 
-### 1.1.3
+### 1.1.3 Classification of states of Markov chains
+
+#### Communication of two states
 
 参考《随机过程》课件
 
@@ -102,7 +104,29 @@ $$
 i \leftrightarrow j, j \leftrightarrow k \Rightarrow i \leftrightarrow k \quad \text { Transitive }
 $$
 
+#### 不可约 Irreducibility
 
+
+
+#### 周期 pe'r
+
+关于周期的三个重要性质：
+
+1.1.5 Theorem. For each state $i$ with $d_i<\infty$, there is some natural number $N$ depending on $i$ such that $p_{i i}^{\left(n d_i\right)}>0$ for all $n \geq N$.
+Proof. Exercise!
+This asserts that a return to state $i$ can occur at all sufficiently large multiples of the period $d_i$. The following theorem shows that the period is a constant in each class of communicating states.
+1.1.6 Theorem. If $i$ ins $j$ then $d_i=d_j$.
+
+Proof. (Exercise) As $p_{j j}^{\left(n d_j\right)}>0$ for sufficiently big $n$ and $\exists m_1, m_2>0$ so that $p_{i j}^{\left(m_1\right)}>0$ and $p_{j i}^{\left(m_2\right)}>0$, it follows that $d_i\left|m_1+m_2, d_i\right| m_1+n d_j+m_2$, and so $d_i \mid d_j$. Switching the roles of $i$ and $j$, it holds that $d_j \mid d_i$. Thus $d_i=d_j$.
+
+$$
+\text { If } d_i<\infty \text {, is } p_{i i}^{\left(d_i\right)}>0 \text { ? }(\times ; \text { cf. Footnote } 4)
+$$
+
+1.1.7 Corollary. If $p_{i j}^{(m)}>0$ and $d_j<\infty$, then $p_{i j}^{\left(m+n d_j\right)}>0$ for all $n$ sufficiently large.
+
+Proof. Exercise!
+A Markov chain in which each state has period one is called aperiodic. The vast majority of Markov chains we deal with are aperiodic. For an interesting property of period, see Lemma 1.3.9 in $\S 1.3$.
 
 
 
@@ -110,3 +134,89 @@ $$
   - *Note*: Any two classes of states are either identical or disjoint.
 
 - **Irreducible（不可约）**: The Markov chain is said to be *irreducible* if there is only one class, that is, if all states communicate with each other.
+
+
+
+## 1.2 常返态和非常返态
+
+1.2.1 Theorem. The state $i$ is recurrent iff $\sum_{n=1}^{+\infty} p_{i i}^{(n)}=\infty$. Here $P^n=\left[p_{j k}^{(n)}\right]$ is the $n$-steps transition matrix.
+
+
+
+1.2.2 Corollary (0-1 law). The state $i$ is recurrent iff $\mathbb{P}\left\{\exists n_k \nearrow+\infty\right.$ s.t. $\left.X_{n_k}=i \mid X_0=i\right\}>0$. That is, $\mathbb{P}\left(X_n=i\right.$ i.o. $\left.\mid X_0=i\right)>0$ iff $\mathbb{P}\left(X_n=i\right.$ i.o. $\left.\mid X_0=i\right)=1$.
+
+如果i是一个暂态，那么对于几乎所有的 $\omega \in \Omega$ （即在概率测度P下，除了一个概率为0的集合外，对所有的样本路径 $\omega$ 都成立），它们对应的随机过程都最终会永远地离开状态i。也就是说，$\mathbb{P}\left(X_n=i\right.$ i.o. $\left.\mid X_0=i\right)$ 其实是一个对 $\omega$ 的概率，表示使得 $X_n=i$ 出现无穷多次的 $\omega$ 出现的概率。 如果这个概率大于0，那它只能是1，而不可能是0到1之间的某个数。也就是说这个概率要么是0（暂态），要么是1（常返态）。
+
+
+
+**First visiting instant（首次访问时间）**
+Given any state $j \in S$, define random variable $T_j: \Omega \rightarrow\{1,2, \ldots\} \cup\{\infty\}$ by
+$$
+T_j(\omega)= \begin{cases}\min \left\{n \geq 1: X_n(\omega)=j\right\} & \text { if } \exists n \geq 1 \text { s.t. } X_n(\omega)=j \\ \infty & \text { if } X_n(\omega) \neq j \forall n \geq 1\end{cases}
+$$
+
+Since $\left\{X_1 \neq j, \ldots, X_{n-1} \neq j, X_n=j\right\}=\left\{T_j=n\right\} \forall n \geq 1$, so $T_j \in \mathscr{F}$. Of course $X_{T_j} \equiv j$.
+Define
+$$
+f_{i j}^{(m)}=\mathbb{P}\left\{T_j=m \mid X_0=i\right\} \forall m \geq 1 \quad \text { and } \quad f_{i j}^*=\sum_{m=1}^{\infty} f_{i j}^{(m)} \quad\left(0 \leq f_{i i}^* \leq 1\right)
+$$
+
+Then $f_{i j}^*$ is just the probability of, starting from $i$, visiting $j$ after some finite-length of time.
+
+<font color=red>$T_j$ 表示第一次到达状态 $j$ 的时间，即$\left\{X_1 \neq j, \ldots, X_{n-1} \neq j, X_n=j\right\}=\left\{T_j=n\right\}$；</font>
+
+<font color=red>$f_{i j}^{(m)}$ 表示从状态 $i$ 开始，经过 $m$ 步第一次到达状态 $j$ 的概率； </font>
+
+<font color=red> $f_{i j}^*$ 表示从状态 $i$ 开始，在有限时间内到达状态 $j$ 的概率</font>
+
+
+
+1.2.3 Exercise. Let $X=\left(X_n\right)_{n \geq 0}$ be an irreducible Markov chain with state space $S=\{1, \ldots, N\}$, where $2 \leq N<\infty$. Prove the following two statements:
+(1) There exist two constants $C>0$ and $0<\rho<1$ such that
+$$
+\mathbb{P}\left\{T_j>n \mid X_0=i\right\} \leq C \rho^n \quad \forall 1 \leq i, j \leq N \text { and } n \geq 1
+$$
+
+(2) $m_{i j}:=\mathrm{E}_{\mathbb{P}\left(\cdot \mid X_0=i\right)}\left[T_j\right]<\infty .^8$
+
+Thus $X$ is "positive recurrent" (cf. Corollary 1.3.10).
+
+
+
+1.2.4 Exercise. Prove that:
+(1) $f_{i i}^{(n)}=\mathbb{P}\left\{X_{m+n}=i, X_{m+k} \neq i, 1 \leq k<n \mid X_m=i\right\}$ for any $n \geq 2$.
+(2) $f_{i i}^{(n)}=\sum_{i_1 \neq i, \ldots, i_{n-1} \neq i} p_{i i_1} \cdots p_{i_{n-1} i}$ for any $n \geq 2$.
+
+
+
+为了证明定理1.2.1，我们需要引理1.2.5和1.2.6：
+
+1.2.5 Lemma. The state $i$ is recurrent iff $f_{i i}^*=1$.
+
+Proof. Since $\left\{\exists n_k \nearrow \infty\right.$ s.t. $\left.X_{n_k}=i\right\} \subseteq \sum_{m=1}^{\infty}\left\{T_i=m\right\}$, so if $i$ is recurrent, then $f_{i i}^*=1$. Conversely, assume $f_{i i}^*=1$. To show $i$ is recurrent, suppose to the contrary that $i$ is non-recurrent. Then $\exists N \geq 0$ such that $\mathbb{P}\left\{X_N=i\right.$ and $\left.X_{N+\ell} \neq i \forall \ell \geq 1 \mid X_0=i\right\}>0$; and then from Markov property and time-homogeneity, it follows that $\mathbb{P}\left\{X_{\ell} \neq i \forall \ell \geq 1 \mid X_0=i\right\}>0$. So $f_{i i}^*<1$, a contradiction. This thus proves the lemma.
+
+<font color=red>这个引理是说，常返态一定会在有限的时间内返回自身。引理1.2.5也经常被用作常返态的定义。</font>
+
+<img src="md-images/image-20241010105556235.png" style="zoom:50%" />
+
+
+
+1.2.6 Lemma. Given any two states $i, j \in S$,
+
+$$
+p_{i j}^{(n)}=\sum_{m=1}^n f_{i j}^{(m)} p_{j j}^{(n-m)}
+$$
+
+for all $n \geq 1$.
+Proof. (Exercise) This follows from that
+
+$$
+\begin{aligned}
+p_{i j}^{(n)} & =\mathbb{P}\left(X_n=j \mid X_0=i\right) \\
+& =\mathbb{P}\left(X_1=j, X_n=j \mid X_0=i\right)+ \\
+& \mathbb{P}\left(X_1 \neq j, X_2=j, X_n=j \mid X_0=i\right)+\cdots+\mathbb{P}\left(X_1 \neq j, \ldots, X_{n-1} \neq j, X_n=j \mid X_0=i\right) \\
+= & \sum_{m=1}^n f_{i j}^{(m)} p_{j j}^{(n-m)}
+\end{aligned}
+$$
+
+where $p_{j j}^{(0)}=1$.
