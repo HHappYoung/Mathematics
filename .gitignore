@@ -17,6 +17,9 @@
 *.pkl
 data/
 
+# 
+*.jpg
+
 # Ignore media files
 *.mp4
 *.m4a
