@@ -177,6 +177,84 @@ $$
 
 
 
+
+
+
+<font color=orange>0.2.9 Theorem (Tonelli-Fubini theorem).</font> Let $(X, \mathscr{X}, \mu)$ and $(Y, \mathscr{Y}, \nu)$ be two $\sigma$-finite measure spaces, and let $f(x, y)$ be a function from $X \times Y$ into $[0, \infty]$ which is $\mathscr{X} \otimes \mathscr{Y}$-measurable, or let $f$ belong to $L^1(X \times Y, \mathscr{X} \otimes \mathscr{Y}, \mu \otimes \nu)$. Then $\int_X f(x, y) \mu(d x)$ and $\int_Y f(x, y) \nu(d y)$ are $\mathscr{Y}$ - and $\mathscr{X}$ measurable functions of the variables $y$ and $x$ respectively, such that
+$$
+\begin{aligned}
+\int_{X \times Y} f(x, y) \mu \otimes \nu(d x d y) & =\int_Y\left(\int_X f(x, y) \mu(d x)\right) \nu(d y) \\
+& =\int_X\left(\int_Y f(x, y) \nu(d y)\right) \mu(d x)
+\end{aligned}
+$$
+ $\otimes$ 表示张量积，它相当于是在笛卡尔积的基础上加上了空间的数学结构。
+
+- 对 $\sigma$ 代数的张量积：$\mathscr{X} \otimes \mathscr{Y}$ 表示两个σ-代数的乘积σ-代数，是由形如A×B（笛卡尔积）的矩形集生成的最小σ-代数。例如： 如果A ∈ $\mathscr{X}$, B ∈ $\mathscr{Y}$  ，则A×B ∈ $\mathscr{X} \otimes \mathscr{Y}$
+
+- 对测度的张量积：$\mu \otimes \nu$ 表示乘积测度，定义在 $\mathscr{X} \otimes \mathscr{Y}$ 上，对矩形集 $A \times B$ 满足 (μ⊗ν)(A×B) = μ(A)·ν(B)。例如：如果μ(A) = 2, ν(B) = 3 ，则(μ⊗ν)(A×B) = 6
+
+笛卡尔积：
+
+- 只关注集合元素的配对
+- 不包含任何额外的数学结构
+- 是纯集合论概念
+
+张量积：
+
+- 保持原空间的数学结构（测度、代数性质等）
+- 包含更丰富的结构信息
+- 是测度论/代数的概念
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 0.4 条件期望
 
 

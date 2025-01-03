@@ -1,3 +1,40 @@
+### 1.2.3 Examples of recurrent Markov chains
+
+$1 D$-random walk on $\mathbb{Z}$. Consider the random walk $X=\left\{X_n\right\}_{n \geq 0}$ on $\mathbb{Z}$, where at each transition the particle moves with probability $p$ one unit to the right and with probability $q=1-p$ one unit to the left $(0<p<1)$. It is irreducible and not aperiodic. In fact, $d=2$. Hence
+$$
+p_{00}^{(2 n+1)}=0 \forall n \geq 0, \quad \text { and } \quad p_{00}^{(2 n)}=\binom{2 n}{n} p^n q^n=\frac{(2 n)!}{n!n!} p^n q^n \forall n \geq 0 .
+$$
+
+
+We appeal now to Stirling's formula: as $n$ sufficiently big,
+
+$$
+n!\sim n^{n+\frac{1}{2}} e^{-n \sqrt{2 \pi}}
+$$
+
+
+Applying the Stirling formula we obtain
+
+$$
+p_{00}^{(2 n)} \sim \frac{(p q)^n 2^{2 n}}{\sqrt{\pi n}}=\frac{(4 p q)^n}{\sqrt{\pi n}} .
+$$
+
+
+It is readily verified that
+
+$$
+p(1-p)=p q \leq \frac{1}{4} \quad \text { with equality holding iff } p=q=\frac{1}{2}
+$$
+
+Hence, $\sum_{n=1}^{+\infty} p_{00}^{(n)}=\infty$ if and only if $p=\frac{1}{2}$. Therefore, from Theorem 1.2.1, it follows that
+The one-dimensional random walk on $\mathbb{Z}$ is recurrent iff $p=q=\frac{1}{2}$; i.e., "symmetric".
+
+
+
+$\binom{2 n}{n} \sim \frac{4^n}{\sqrt{\pi n}}$
+
+
+
 1.3.1 Nonrecurrent case and definition
 
 First of all, by Theorem 1.2.9 there follows some simple facts:
